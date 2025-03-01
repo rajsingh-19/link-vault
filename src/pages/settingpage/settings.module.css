@@ -1,0 +1,116 @@
+.settingsPageContainer {
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  display: grid;
+  grid-template-columns: 17% 83%;
+  grid-template-areas:
+    "sidebar navbar"
+    "sidebar content";
+  gap: 0px;
+  background-color: #F3F3F1;
+}
+.navContainer {
+  grid-area: navbar;
+  height: 10vh;
+  background-color: #F3F3F1;
+}
+.sidebarContainer {
+  grid-area: sidebar;
+  height: 100vh;
+  overflow-x: hidden;
+}
+.contentContainer {
+  grid-area: content;
+  height: 90vh;
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+.settingsCard {
+  width: 90%;
+  background-color: #FFFFFF;
+  border-radius: 25px;
+  position: relative;
+}
+.heading {
+  padding: 20px;
+}
+.heading > p {
+  font-size: 16px;
+  font-family: "Poppins";
+  font-weight: 500;
+  line-height: 24px;
+  color: #29A263;
+  /* text-decoration: underline; */
+}
+.heading > hr {
+  color: #737373;
+}
+.updateContainer {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.inputContainer {
+  width: 100%;
+  width: 500px;
+}
+.inputContainer label {
+  font-family: "Poppins";
+  font-size: 17px;
+  font-weight: 400;
+  color: #5E5E5E;
+}
+.input {
+  width: 100%;
+  height: 42px;
+  background-color: #FFFFFF;
+  border: 0.94px solid #3E3E3E;
+  border-radius: 12px;
+  color: #000000;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins";
+  padding: 5px 10px;
+  outline: none;
+}
+.lastNameContainer {
+  margin-bottom: 23px;
+}
+.fifthInputContainer {
+  margin-top: 100px;
+}
+.saveBtn {
+  width: 180px;
+  height: 40px;
+  font-family: "Poppins";
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  color: #FFFFFF;
+  background-color: #29A263;
+  border: none;
+  cursor: pointer;
+  border-radius: 15px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+/*       Error message container */
+.errorContainer {
+  width: 100%;
+}
+.errorMessage {
+  height: 16px;
+  font-size: 14px;
+  color: #FF0101;
+  line-height: 14px;
+  margin-bottom: 5px;
+  margin-top: 2px;
+}
+.errorMessage:empty {
+  visibility: hidden;
+}

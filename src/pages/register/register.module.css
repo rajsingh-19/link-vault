@@ -1,0 +1,148 @@
+.registerPageContainer {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+.contentContainer {
+    width: 70%;
+    position: relative;
+}
+.brandingLogoContainer {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+}
+.registerContainer {
+    width: 640px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    margin-left: 22%;
+    font-family: "Poppins";
+}
+.heading {
+    text-align: center;
+    font-size: 40px;
+    font-weight: 800;
+    padding-top: 48px;
+    line-height: 55px;
+}
+.formContainer {
+    width: 420px;
+    height: 600px;
+    padding: 20px;
+}
+.subHeading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+.subHeading > p:first-of-type {
+    font-size: 20px;
+    font-weight: 500;
+    color: #333333;
+} 
+.subHeading > button {
+    background: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.subHeading > button span {
+    text-decoration: underline;
+    font-size: 12px;
+    color: #28A263;
+    font-weight: 400;
+    font-family: "Poppins";
+}
+.inputContainer {
+    width: 100%;
+}
+.inputContainer label {
+    font-size: 13px;
+    font-weight: 400;
+    color: #666666;
+}
+.input {
+    width: 100%;
+    height: 38px;
+    background-color: #FFFFFF;
+    border: 0.7px solid #66666659;
+    border-radius: 8px;
+    color: #666666;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 5px 10px;
+    outline: none;
+}
+.lastNameContainer {
+    margin-bottom: 23px;
+}
+.checkboxContainer {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 12px;
+}
+.checkbox {
+    width: 15px;
+    height: 15px;
+    margin: 2px 5px;
+}
+.checkboxContent {
+    font-size: 11px;
+    font-weight: 400;
+    color: #3D3D3D;
+}
+.checkboxContent span {
+    text-decoration: underline;
+}
+.registerBtn {
+    width: 100%;
+    height: 42px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #FFFFFF;
+    background-color: #C9C9C9;
+    border: none;
+    cursor: pointer;
+    border-radius: 28px;
+}
+
+/*       Error message container */
+.errorContainer {
+    width: 100%;
+}
+.errorMessage {
+    height: 16px;
+    font-size: 12px;
+    color: #FF0101;
+    line-height: 14px;
+    margin-bottom: 5px;
+    margin-top: 2px;
+}
+.errorMessage:empty {
+    visibility: hidden;
+}
+.info {
+    font-size: 12px;
+    font-weight: 400;
+    color: #676B5F;
+}
+.info span {
+    text-decoration: underline;
+}
+
+/*      img  section         */
+.imgContainer {
+    width: 30%;
+    height: 100vh;
+    overflow-y: hidden;
+    object-fit: cover;
+}
+.imgContainer > img {
+    height: 100%;
+    width: 100%;
+}

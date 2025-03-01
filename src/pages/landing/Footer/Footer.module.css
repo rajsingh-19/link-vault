@@ -1,0 +1,89 @@
+.container {
+    margin: 81px 82px 50px 82px;
+    box-shadow: 0px -4px 98.8px 0px #28A2634D;
+    background: #FFFFFF;
+    border-radius: 1rem;
+    padding: 4rem;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2.5rem;
+}
+
+.topFirst {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.Btn {
+    background: #28A263;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26.4px;
+    letter-spacing: 0%;
+    text-align: center;
+    color: white;
+    border-radius: 96px;
+    padding: 1rem 1.875rem 1.25rem 1.875rem;
+    cursor: pointer;
+}
+
+.loginBtn {
+    background: rgb(221, 222, 223);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26.4px;
+    letter-spacing: 0%;
+    text-align: center;
+    color: black;
+    border-radius: 96px;
+    padding: 1rem 1.875rem 1.25rem 1.875rem;
+    cursor: pointer;
+}
+
+.topSecond {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26.4px;
+    letter-spacing: 0%;
+    color: black;
+}
+
+.bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.bLine {
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 21.45px;
+    letter-spacing: 0.13px;
+    color: #1E2330;
+    width: 656px;
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}

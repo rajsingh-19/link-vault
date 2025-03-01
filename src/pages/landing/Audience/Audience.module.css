@@ -1,0 +1,56 @@
+.container {
+    margin: 50px 84px 0px 84px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+.left {
+    position: relative;
+    background: #FFFFFF;
+    height: 493px;
+    width: 760px;
+    border-radius: 2rem;
+}
+
+.image {
+    position: absolute;
+    top: 87.91px;
+    left: 105.88px;
+}
+
+.leftContent {
+    position: absolute;
+    bottom: 3rem;
+    left: 40px;
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 36.4px;
+    letter-spacing: -0.28px;
+    color: #1E2330;
+}
+
+.right {
+    width: 480px;
+}
+
+.heading {
+    margin-bottom: 1.5rem;
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 58.8px;
+    letter-spacing: -1.12px;
+    color: #1E2330;
+}
+
+.rightContent {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 30px;
+    letter-spacing: -0.4px;
+    color: #1E2330;
+}

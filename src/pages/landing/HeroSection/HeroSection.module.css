@@ -1,0 +1,45 @@
+.container {
+    margin: 6.875rem 0rem 0rem 5.25rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+}
+
+.left {
+    width: 664px;
+}
+
+.heading {
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 70px;
+    letter-spacing: 0px;
+    color: #1E2330;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+}
+
+.content {
+    font-family: Poppins;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: 0px;
+    color: #1E2330;
+    margin-bottom: 3rem;
+}
+
+.btn {
+    background: #28A263;
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0px;
+    color: white;
+    padding: 1rem 2rem 1.25rem 1.5rem;
+    cursor: pointer;
+    border-radius: 100px;
+    width: 194px;
+}

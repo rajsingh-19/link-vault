@@ -1,0 +1,61 @@
+.container {
+    margin: 50px 85px 0px 85px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+.left {
+    width: 480px;
+}
+
+.heading {
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 58.8px;
+    letter-spacing: -1.12px;
+    color: #1E2330;
+    margin-bottom: 1.5rem;
+}
+
+.leftContent {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 30px;
+    letter-spacing: -0.4px;
+    color: #1E2330;
+}
+
+.right {
+    border-radius: 2rem;
+    background: #C6C6C6;
+    height: 493px;
+    width: 760px;
+    position: relative;
+}
+
+.rightTop {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    top: 105px;
+    left: 74px;
+}
+
+.rightContent {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 36.4px;
+    letter-spacing: -0.28px;
+    color: white;
+    position: absolute;
+    bottom: 48px;
+    left: 40px;
+    width: 510px;
+    overflow: hidden;
+}
