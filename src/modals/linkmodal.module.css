@@ -188,3 +188,6 @@ hr {
   line-height: 20px;
   color: #000000BF;
 }
+.selectedAppType {
+  border: 1px solid #a8a8a6 !important;
+}

@@ -6,11 +6,9 @@ import tiktok from '../../../assets/tiktok.svg';
 import spark from '../../../assets/spark.svg';
 
 const Footer = ({ handleSignUp, handleLogin }) => {
-
     const column1 = ["Careers", "Mog", "Pross", "Social Good", "Contact"];
     const column2 = ["Getting Started", "Features and How-Tos", "FAQS", "Report a Violation"];
     const column3 = ["Terms and Conditions", "Privacy Policy", "Cookie Notice", "Trust Center"];
-
 
     return (
         <div className={styles.container}>

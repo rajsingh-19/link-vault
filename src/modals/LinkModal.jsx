@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./linkmodal.module.css";
-import { createLink } from "../services/index";
+import { createLink, getLinkById, updateLink } from "../services/index";
 import deleteIcon from "../assets/delete.svg";
 import copyIcon from "../assets/copy.svg";
 import shopIcon from "../assets/shop.svg";
@@ -10,19 +10,29 @@ import youtubeIcon from "../assets/youtube.svg";
 import twiterIcon from "../assets/twitter.svg";
 import { toast } from "react-toastify";
 
-const LinkModal = ({ handleCloseModal }) => {
-  const [activeTab, setActiveTab] = useState("link");
+const LinkModal = ({ handleCloseModal, id, modalTab }) => {
+  const [activeTab, setActiveTab] = useState(modalTab);
   const modalRef = useRef(null);
   const [showAppType, setShowAppType] = useState(true);
   const [isChecked, setIsChecked] = useState(false);
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
+  const [selectedApp, setSelectedApp] = useState("");
   const [linkData, setLinkData] = useState({
     title: "",
     url: "",
     linkCategory: "",
     appType: ""
   });
+
+  useEffect(() => {
+    if (id) {
+      fetchLinkDetails();
+    };
+    if(activeTab === "shop") {
+      setShowAppType(false);
+    }
+  }, [id]);
 
   // Close modal if clicked outside
   useEffect(() => {
@@ -37,7 +47,50 @@ const LinkModal = ({ handleCloseModal }) => {
     };
   }, [handleCloseModal]);
 
+  const fetchLinkDetails = async () => {
+    try {
+      const result = await getLinkById(token, id);
+      if (result.status === 200) {
+        const resData = await result.json();
+
+        const linkDetails = resData.data;
+
+        console.log(linkDetails);
+        setLinkData({
+          title: linkDetails.title,
+          url: linkDetails.url,
+          linkCategory: linkDetails.linkCategory,
+          appType: linkDetails.appType
+        });
+
+        if(!linkDetails.appType) {
+          setShowAppType(false);
+          setActiveTab("shop");
+        };
+      } else {
+        const error = await result.json();
+        const errorMessage = error.message || "An error occurred";
+        toast.error(errorMessage);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("An unexpected error occurred.");
+    };
+  };
+
   const handleSaveLink = async () => {
+    if (!linkData.title.trim() || !linkData.url.trim()) {
+      setIsChecked(false);
+      toast.error("Title and URL are required!");
+      return;
+    };
+
+    if (activeTab === "link" && !linkData.appType) {
+      setIsChecked(false);
+      toast.error("Please select an application type.");
+      return;
+    };
+
     const linkDataToSend = {
       ...linkData,
       linkCategory: activeTab, // Set category based on active tab
@@ -48,19 +101,44 @@ const LinkModal = ({ handleCloseModal }) => {
       delete linkDataToSend.appType;
     };
 
-    const res = await createLink(userId, token, linkDataToSend);
-    if(res.status === 201) {
-      handleCloseModal();
-      toast.success("Successfully added link");
-    } else {
-      handleCloseModal();
-      toast.error("failed to add link");
+    try {
+      const res = await createLink(userId, token, linkDataToSend);
+      if (res.status === 201) {
+        setIsChecked(true);
+        handleCloseModal();
+        toast.success("Successfully added link");
+      } else {
+        toast.error("Failed to add link");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("An unexpected error occurred.");
+    }
+  };
+
+  const handleUpdateLink = async () => {
+    try {
+      const res = await updateLink(token, id, linkData);
+      if(res.status === 200) {
+        setIsChecked(true);
+        handleCloseModal();
+        toast.success("Successfully Updated link");
+      } else {
+        handleCloseModal();
+        toast.error("failed to update link");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("An unexpected error occurred.", error);
     }
   };
 
   const handleToggleChange = async () => {
-    setIsChecked(prev => !prev);
-    await handleSaveLink(); // Save link when toggled
+    if (id) {
+      await handleUpdateLink(); // Call update API if updating an existing link
+    } else {
+      await handleSaveLink(); // Call create API if adding a new link
+    }
   };
 
   const handleTitleChange = (e) => {
@@ -78,11 +156,12 @@ const LinkModal = ({ handleCloseModal }) => {
   };
 
   const handleAppType = (name) => {
+    setSelectedApp(name);
     const updatedName = name === "X" ? "Twitter" : name; // Convert "X" to "Twitter"
     setLinkData(prev => ({
       ...prev,
       appType: updatedName
-    }))
+    }));
   };
 
   const handleAddLink = () => {
@@ -106,7 +185,17 @@ const LinkModal = ({ handleCloseModal }) => {
       appType: ""
     });
     setIsChecked(false); // Reset toggle switch
-  }
+  };
+
+  const handleCopyUrl = () => {
+    if (linkData.url) {
+      navigator.clipboard.writeText(linkData.url)
+        .then(() => toast.success("Copied to clipboard"))
+        .catch(err => console.error("Failed to copy URL:", err));
+    } else {
+      toast.error("No URL to copy!");
+    }
+  };
 
   const socialArray = [{name: "Instagram", src: instagramIcon}, {name: "FaceBook", src: facebookIcon}, {name: "YouTube", src: youtubeIcon}, {name: "X", src: twiterIcon}];
 
@@ -145,7 +234,7 @@ const LinkModal = ({ handleCloseModal }) => {
           <div className={styles.linkUrlContainer}>
             <input type="text" className={styles.linkUrl} placeholder="Link Url" onChange={handleUrlChange} value={linkData.url}  />
             <div className={styles.btnContainer}>
-              <button className={styles.copyBtn}>
+              <button className={styles.copyBtn} onClick={handleCopyUrl}>
                 <img src={copyIcon} alt="copy icon" />
               </button>
               <button className={styles.delBtn} onClick={handleClearDetails}>
@@ -162,7 +251,7 @@ const LinkModal = ({ handleCloseModal }) => {
                   {
                     socialArray.map(({name, src}, index) => (
                       <div key={index} className={styles.socialAppContainer}>
-                        <button onClick={() => handleAppType(name)}>
+                        <button onClick={() => handleAppType(name)} className={`${selectedApp === name ? styles.selectedAppType : ""}`}>
                           <img src={src} alt={`${name} icon`} />
                         </button>
                         <p>{name}</p>

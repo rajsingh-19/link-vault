@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./preview.module.css";
-import { incrementCtaCount, getAllSocialLinks, getAllShopLinks, getUserInfo } from "../../services/index";
+import { incrementCtaCount, getAllSocialLinks, getAllShopLinks, getUserInfo, createClick } from "../../services/index";
 import sharingProfile from "../../assets/sharingProfile.svg";
 import userImg from "../../assets/userImg.png";
 import branding from "../../assets/branding.svg";
@@ -10,18 +10,16 @@ import facebookIcon from "../../assets/facebook.svg";
 import youtubeIcon from "../../assets/youtube.svg";
 import twiterIcon from "../../assets/twitter.svg";
 import shopIcon from "../../assets/shop.svg";
-
 import { toast } from "react-toastify";
 
-const PreviewCard = () => {
+const PreviewCard = ({ bannerColor, liveProfile, modalStatus }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("link");
-  // const userName = localStorage.getItem("userName");
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const [showLinks, setShowLinks] = useState(false); 
   const [links, setLinks] = useState([]);  
-  const [profileImgUrl, setProfileImgUrl] = useState("");
+  const [cardBgColor, setCardBgColor] = useState("#F7F7F7");
   const [userInformation, setUserInformation] = useState({
     profileImgUrl: "",
     bannerColor: "#3a2d25",
@@ -49,10 +47,9 @@ const PreviewCard = () => {
       if (res.status === 200) {
         const resData = await res.json();
         const linkDetails = resData.totalLinks;
-        // console.log(resData);
-        // console.log(linkDetails);
+
         setLinks(linkDetails);
-        setShowLinks(true); 
+        setShowLinks(linkDetails.length > 0); 
       }
     } catch(error) {
       console.error("Failed to fetch user data:", error);
@@ -68,8 +65,7 @@ const PreviewCard = () => {
       if (res.status === 200) {
         const resData = await res.json();
         const linkDetails = resData.totalLinks;
-        // console.log(resData);
-        // console.log(linkDetails);
+
         setLinks(linkDetails);
         setShowLinks(true); 
       }
@@ -100,38 +96,61 @@ const PreviewCard = () => {
   };
   
   useEffect(() => {
+    if (!modalStatus) {
+      fetchAllShopLinks();
+      fetchSocialLinks();
+    }
+  }, [modalStatus]);
+    
+  useEffect(() => {
     fetchUserData();
   },[]);
-
-  useEffect(() => {
-    fetchSocialLinks();
-  }, []);
     
   // fn for listing the social media links
   const handleAddLink = () => {
     fetchSocialLinks();
     setActiveTab("link");
   };
+
   // fn for listing the shop links
   const handleShop = () => {
     fetchAllShopLinks();
     setActiveTab("shop");
   };
 
-  const socialArray = [{name: "Instagram", src: instagramIcon}, {name: "FaceBook", src: facebookIcon}, {name: "YouTube", src: youtubeIcon}, {name: "X", src: twiterIcon}];
+  const socialArray = [{name: "Instagram", src: instagramIcon}, {name: "FaceBook", src: facebookIcon}, {name: "YouTube", src: youtubeIcon}, {name: "Twitter", src: twiterIcon}];
   const shop =  {name: "shop", src: shopIcon};
 
   const handleShareProfile = () => {
-    console.log("share profile");
+    const profileLink = `${window.location.origin}/profile/${userId}`;
+    navigator.clipboard.writeText(profileLink)
+      .then(() => toast.success("Copied to clipboard."))
+      .catch((err) => console.error("Failed to copy: ", err));
+  };
+
+  const handleGoToLink = async (linkId) => {
+    try {
+      const res = await createClick(linkId);
+      const resData = await res.json();
+      // console.log(resData.redirectUrl);
+      if (resData?.redirectUrl) {
+        window.location.href = resData.redirectUrl;
+      } else {
+        toast.error("Failed to retrieve the redirection link");
+      }
+    } catch(error) {
+      console.error("Failed to go to the link:", error);
+      toast.error("Failed to load the link"); 
+    }
   };
 
   return (
-    <div className={styles.previewCard}>
-      <div className={styles.banner} style={{ backgroundColor: userInformation.bannerColor }}>
+    <div className={styles.previewCard} style={{ backgroundColor: cardBgColor}}>
+      <div className={styles.banner} style={{ backgroundColor: bannerColor || userInformation.bannerColor }}>
         <button className={styles.sharingBtn} onClick={handleShareProfile}>
           <img src={sharingProfile} alt="sharing profile icon" />
         </button>
-        <img className={styles.profileImage} src={userInformation.profileImgUrl || userImg} alt="Profile" />
+        <img className={styles.profileImage} src={liveProfile || userInformation.profileImgUrl || userImg} alt="Profile" />
         <span className={styles.userName}>{`@${userInformation.userName}`}</span>
       </div>
       <div className={styles.tabButtons}>
@@ -152,7 +171,7 @@ const PreviewCard = () => {
           const src = activeTab === "link" ? matchedSocial?.src || userImg : shop.src; 
 
           return (
-            <div key={_id} className={styles.linkContainer}>
+            <div key={_id} className={styles.linkContainer} onClick={() => handleGoToLink(_id)}>
               <div className={styles.iconContainer}>
                 <img className={styles.icon} src={src} alt={`${title} icon`} />
               </div>

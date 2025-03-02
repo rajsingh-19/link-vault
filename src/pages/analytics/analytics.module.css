@@ -10,19 +10,16 @@
     "sidebar content";
   gap: 0px;
 }
-
 .navContainer {
   grid-area: navbar;
   height: 10vh;
   background-color: #F3F3F1;
 }
-
 .sidebarContainer {
   grid-area: sidebar;
   height: 100vh;
   overflow-x: hidden;
 }
-
 .contentContainer {
   grid-area: content;
   height: 90vh;
@@ -30,13 +27,11 @@
   padding: 0px 55px 40px 40px;
   overflow-y: auto;
 }
-
 .top {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-
 .overview {
   font-family: Poppins;
   font-weight: 600;
@@ -45,14 +40,12 @@
   letter-spacing: 0px;
   color: black;
 }
-
 .datePickerContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 1.25rem;
 }
-
 .datePickerInput {
   padding: 0.85rem;
   border: none;
@@ -60,12 +53,10 @@
   font-size: 14px;
   width: 200px;
 }
-
 .datePickerInput:focus {
   border: none;
   outline: none;
 }
-
 .numbersRow {
   display: flex;
   align-items: center;
@@ -74,7 +65,6 @@
   flex-wrap: wrap;
   margin-bottom: 1.75rem;
 }
-
 .social {
   background: #22D679;
   width: 347px;
@@ -88,7 +78,6 @@
   line-height: 24.91px;
   letter-spacing: 0px;
 }
-
 .shop {
   background: #DCFFEB;
   width: 347px;
@@ -102,7 +91,6 @@
   line-height: 24.91px;
   letter-spacing: 0px;
 }
-
 .num {
   font-family: Poppins;
   font-weight: 600;
@@ -111,28 +99,24 @@
   letter-spacing: 0%;
   margin-top: 10px;
 }
-
 .lineGraph {
   width: 100%;
   background: #FFFFFF;
   border-radius: 20px;
   padding: 30px;
 }
-
 .graphsSecondRow {
   display: flex;
   align-items: center;
   gap: 2rem;
   margin-top: 1.75rem;
 }
-
 .deviceGraph {
   background: #FFFFFF;
   border-radius: 20px;
   padding: 30px 30px 10px 30px;
   width: 45%;
 }
-
 .deviceHeading {
   font-family: Poppins;
   font-weight: 600;
@@ -142,7 +126,12 @@
   color: black;
   margin-bottom: 20px;
 }
-
+.pieBox {
+  padding: 3rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .linksGraph {
   background: #FFFFFF;
   border-radius: 20px;
@@ -150,3 +139,90 @@
   width: 50%;
   margin-top: 2.5rem;
 }
+.appNames {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.appNameBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 230px;
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 14.95px;
+  line-height: 19.93px;
+  letter-spacing: 0px;
+  color: black;
+}
+.appName {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/*            responsiveness        */
+@media screen and (max-width: 426px) {
+  .analyticsPageContainer {
+    height: auto;
+    width: 100%;
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "navbar"
+      "content"
+      "sidebar";
+    gap: 0px;
+  }
+  .navContainer {
+    height: auto;
+  }
+  .sidebarContainer {
+    height: auto;
+  }
+  .contentContainer {
+    height: auto;
+  }
+}
+@media screen and (max-width: 768px) {
+  .analyticsPageContainer {
+    height: auto;
+    width: 100%;
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "navbar"
+      "content"
+      "sidebar";
+    gap: 0px;
+  }
+  .navContainer {
+    height: auto;
+  }
+  .sidebarContainer {
+    height: auto;
+  }
+  .contentContainer {
+    height: auto;
+  }
+}
+@media screen and (max-width: 1023px) {
+  .analyticsPageContainer {
+    height: auto;
+    width: 100%;
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "navbar"
+      "content"
+      "sidebar";
+    gap: 0px;
+  }
+  .navContainer {
+    height: auto;
+  }
+  .sidebarContainer {
+    height: auto;
+  }
+  .contentContainer {
+    height: auto;
+  }
+} 

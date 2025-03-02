@@ -11,6 +11,7 @@ import Appearance  from './pages/appearance/Appearance';
 import Analytics from './pages/analytics/Analytics';
 import Settings from './pages/settingpage/Settings';
 import NotFound from "./pages/notfound/NotFound";
+import Profile from './pages/profile/Profile';
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         <Route path='/appearance' element={<ProtectedRoute><Appearance /></ProtectedRoute>} />
         <Route path='/analytics' element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
         <Route path='/settings' element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+        <Route path="/profile/:userId" element={<Profile />} />
         {/* Catch all route for undefined paths */}
         <Route path="*" element={<NotFound />} />
       </Routes>

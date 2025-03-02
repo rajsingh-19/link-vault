@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import styles from "./links.module.css";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import { getUserInfo, updateUserInfo, getAllSocialLinks, getAllShopLinks } from "../../services/index";
+import { getUserInfo, updateUserInfo, getAllSocialLinks, getAllShopLinks, deleteLink } from "../../services/index";
 import Preview from "../../components/preview/PreviewCard";
 //      profile
 import profileImg from "../../assets/userImg.png";
@@ -12,7 +12,6 @@ import deleteIcon from "../../assets/delete.svg";
 import editIcon from "../../assets/edit.svg";
 import clicksIcon from "../../assets/clicksIcon.svg";
 //      banner
-import userImg from "../../assets/userImg.png";
 import sparkLogo from "../../assets/sparkLogo.svg";
 //      modal
 import LinkModal from "../../modals/LinkModal";
@@ -20,6 +19,7 @@ import { toast } from "react-toastify";
 
 const Links = () => {
   const [modalStatus, setModalStatus] = useState(false);
+  const [flag, setFlag] = useState(false);
   const [image, setImage] = useState(null);
   const [showLinks, setShowLinks] = useState(false); 
   // const [bio, setBio] = useState("");
@@ -31,6 +31,8 @@ const Links = () => {
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const [profileImgUrl, setProfileImgUrl] = useState(""); // Default empty image
+  const [editStatus, setEditStatus] = useState(false);
+  const [linkIdToEdit, setLinkIdToEdit] = useState(null);
   const [updateUserInformation, setUpdateUserInformation] = useState({
     bio: "",
     profileImgUrl: "",
@@ -120,8 +122,7 @@ const Links = () => {
       if (res.status === 200) {
         const resData = await res.json();
         const linkDetails = resData.totalLinks;
-        // console.log(resData);
-        // console.log(linkDetails);
+
         setLinks(linkDetails);
         setShowLinks(true); 
       }
@@ -139,8 +140,7 @@ const Links = () => {
       if (res.status === 200) {
         const resData = await res.json();
         const linkDetails = resData.totalLinks;
-        // console.log(resData);
-        console.log(linkDetails);
+
         setLinks(linkDetails);
         setShowLinks(true); 
       }
@@ -178,55 +178,68 @@ const Links = () => {
   }, []);
 
   useEffect(() => {
+    if (!modalStatus) {
+      if(activeTab === "link") {
+        fetchSocialLinks();
+      } else {
+        fetchAllShopLinks();
+      }
+    }
+  }, [modalStatus]);
+  
+  useEffect(() => {
     fetchUserData();
   },[]);
-
-  useEffect(() => {
-    fetchSocialLinks();
-  }, []);
-
-  // toggle button for 
-  const toggleLink = (id) => {
-    setLinks(
-      links.map((link) =>
-        link.id === id ? { ...link, enabled: !link.enabled } : link
-      )
-    );
-  };
-  // fn for deleting the link
-  const deleteLink = (id) => {
-    setLinks(links.filter((link) => link.id !== id));
-  };
-  // fn for edit the link 
-  const editLink = (id, field, value) => {
-    setLinks(
-      links.map((link) => (link.id === id ? { ...link, [field]: value } : link))
-    );
-  };
 
   // fn for listing the social media links
   const handleAddLink = () => {
     fetchSocialLinks();
     setActiveTab("link");
   };
+
   // fn for listing the shop links
   const handleShop = () => {
     fetchAllShopLinks();
     setActiveTab("shop");
   };
-    
+  
+  const handleDeleteLink = async (id) => {
+    try {
+      const res = await deleteLink(token, id);
+      if(res.status === 200) {
+        toast.success("Link Deleted Successfully");
+        
+        // Remove the deleted link from the UI
+        setLinks((prevLinks) => prevLinks.filter(link => link._id !== id));
+
+        // Refetch the links from the backend
+        fetchSocialLinks();
+      }
+    } catch (error) {
+      console.error("Failed to delete the link : ", error);
+      toast.error("Failed to delete the link");
+    }
+  };
+
+  const handleEditLink = (id) => {
+    setEditStatus(true);
+    setLinkIdToEdit(id);
+    setModalStatus(true);
+  };
+  
   const presetColors = ["#3a2d25", "#ffffff", "#000000", "#047857", "#6D28D9", "#D97706"];
+  
   // Determine text color based on background color
   const textColor = updateUserInformation.bannerColor === "#ffffff" ? "#000000" : "#ffffff";
     
   //      fn for opening modal
   const handleCreateLink = () => {
-    console.log("modal open");
+    setEditStatus(false);
+    setLinkIdToEdit(null);
     setModalStatus(true);
   };
   //      fn for closing modal
   const handleCloseModal = () => {
-    console.log("modal closed");
     setModalStatus(false);
   };
     
@@ -244,7 +257,7 @@ const Links = () => {
       <div className={styles.contentContainer}>
         {/*       left section - Preview                */}
         <div className={styles.previewSection}>
-          <Preview />
+          <Preview bannerColor={updateUserInformation.bannerColor} liveProfile={profileImgUrl} modalStatus={modalStatus} />
         </div>
         {/*       right section - profile, link card, banner   */}
         <div className={styles.linksSection}>
@@ -303,17 +316,17 @@ const Links = () => {
                       <div key={link._id} className={styles.linkCard}>
                         <div className={styles.linkDetails}>
                           <div className={styles.editOptsBtnContainer}>
-                              <p className={styles.linkTitle}>
+                              <p className={styles.linkTitle} onClick={() => handleEditLink(link._id)}>
                                 <span>{link.title}</span>
                                 <img src={editIcon} alt="edit icon" />
                               </p>
-                              <p className={styles.linkUrl}>
+                              <p className={styles.linkUrl} onClick={() => handleEditLink(link._id)}>
                                 <span>{link.url}</span>
                                 <img src={editIcon} alt="edit icon" />
                               </p>
                           </div>
                           <div className={styles.toggleSwitchContainer}>
-                            <input type="checkbox" className={styles.toggleSwitch} checked={link.enabled} onChange={() => toggleLink(link._id)} />
+                            <input type="checkbox" className={styles.toggleSwitch} checked={true} readOnly  />
                           </div>
                         </div>
                         <div className={styles.clickDelContainer}>
@@ -321,7 +334,7 @@ const Links = () => {
                             <img src={clicksIcon} alt="clicks icon" />
                             <span>{`${link.clicks.length} clicks`}</span>
                           </div>
-                          <button className={styles.deleteIcon} onClick={() => deleteLink(link.id)}>
+                          <button className={styles.deleteIcon} onClick={() => handleDeleteLink(link._id)}>
                             <img src={deleteIcon} alt="delete icon" />
                           </button>
                         </div>
@@ -337,11 +350,14 @@ const Links = () => {
             <p>Banner</p>
             <div className={styles.bannerCard}>
               <div className={styles.bannerContainer} style={{ backgroundColor: updateUserInformation.bannerColor || bgColor }} >
-                <img className={styles.profileImage} src={userImg} alt="Profile" />
+                <img className={styles.profileImage} src={updateUserInformation.profileImgUrl || profileImg} alt="Profile" />
                 <div className={styles.userInfo} style={{ color: textColor }}>
                   <p className={styles.username} style={{ color: textColor }}>{`@${updateUserInformation.userName}`}</p>
                   <p style={{ color: textColor }}>
-                    <img src={sparkLogo} alt="spark logo" />/opopo_08
+                    <img src={sparkLogo} alt="spark logo" />
+                    <span>
+                      {updateUserInformation.bio}
+                    </span>
                   </p>
                 </div>
               </div>
@@ -374,11 +390,15 @@ const Links = () => {
         </div>
       </div>
       {/*             Modal Container          */}
-      {modalStatus && (
-        <div className={styles.modalViewContainer}>
-          <LinkModal handleCloseModal={handleCloseModal} />
-        </div>
-      )}
+      {editStatus ?
+        (modalStatus && (
+          <div className={styles.modalViewContainer}>
+            <LinkModal handleCloseModal={handleCloseModal} id={linkIdToEdit} />
+          </div>)) :
+        (modalStatus && (<div className={styles.modalViewContainer}>
+          <LinkModal handleCloseModal={handleCloseModal}  modalTab={activeTab} />
+        </div>))
+      }
     </div>
   )
 };

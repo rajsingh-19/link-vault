@@ -1,24 +1,21 @@
 .container {
-    margin: 81px 82px 50px 82px;
+    margin: 81px 82px 0px 82px;
     box-shadow: 0px -4px 98.8px 0px #28A2634D;
     background: #FFFFFF;
     border-radius: 1rem;
     padding: 4rem;
 }
-
 .top {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 2.5rem;
 }
-
 .topFirst {
     display: flex;
     gap: 10px;
     align-items: center;
 }
-
 .Btn {
     background: #28A263;
     display: flex;
@@ -35,7 +32,6 @@
     padding: 1rem 1.875rem 1.25rem 1.875rem;
     cursor: pointer;
 }
-
 .loginBtn {
     background: rgb(221, 222, 223);
     display: flex;
@@ -52,7 +48,6 @@
     padding: 1rem 1.875rem 1.25rem 1.875rem;
     cursor: pointer;
 }
-
 .topSecond {
     display: flex;
     flex-direction: column;
@@ -65,13 +60,11 @@
     letter-spacing: 0%;
     color: black;
 }
-
 .bottom {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-
 .bLine {
     font-family: Poppins;
     font-weight: 700;
@@ -81,9 +74,32 @@
     color: #1E2330;
     width: 656px;
 }
-
 .icons {
     display: flex;
     align-items: center;
     gap: 1.5rem;
+}
+@media screen and (max-width:500px) {
+    .container {
+        margin: 3rem 1rem 0rem 1rem;
+        padding: 1.5rem 1.25rem;
+    }
+    .top {
+        flex-direction: column-reverse;
+        gap: 1.5rem;
+    }
+    .topFirst {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .topSecond {
+        font-family: Poppins;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 18px;
+        letter-spacing: 0%;
+    }
+    .bLine {
+        display: none;
+    }
 }

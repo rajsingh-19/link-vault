@@ -4,7 +4,6 @@ import styles from "./register.module.css";
 import { register } from "../../services/index";
 import banner from "../../assets/banner.png";
 import branding from "../../assets/branding.svg";
-import { toast } from "react-toastify";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -63,7 +62,8 @@ const Register = () => {
     e.preventDefault(); // Prevents the default form submission behavior (like refreshing the page)
 
     if (!checkboxChecked) {
-      toast.error("You must agree to the Terms of Use and Privacy Policy");
+      console.log("abra ka dba");
+      // toast.error("You must agree to the Terms of Use and Privacy Policy");
       return;
     };
   
@@ -83,7 +83,6 @@ const Register = () => {
           confirmPassword: ""
         });
 
-        toast.success("Registered Successfully");
         setCheckboxChecked(false); // Reset checkbox
         navigate("/login");
       } else {

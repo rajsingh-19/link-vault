@@ -113,7 +113,7 @@ export const getCtaCount = (userId, token) => {
   });
 };
 
-// createClick
+//      api for go to the links and create clicks
 export const createClick = (linkId) => {
   return fetch(`${apiURL}api/link/${linkId}`, {
     method: 'GET',
@@ -178,7 +178,6 @@ export const createLink = (userId, token, linkDataToSend) => {
 //        api for get all the social links
 export const getAllSocialLinks = (userId, token) => {
   return fetch(`${apiURL}api/link/getAllLinksForSocial/${userId}`, {
-  // return fetch(`${apiURL}api/link/getAllLinks/${userId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -190,7 +189,6 @@ export const getAllSocialLinks = (userId, token) => {
 //        api for get all the social links
 export const getAllShopLinks = (userId, token) => {
   return fetch(`${apiURL}api/link/getAllLinksForShop/${userId}`, {
-  // return fetch(`${apiURL}api/link/getAllLinks/${userId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -198,3 +196,72 @@ export const getAllShopLinks = (userId, token) => {
     }
   })
 }; 
+
+//        api for link delete
+export const deleteLink = (token, id) => {
+  return fetch(`${apiURL}api/link/deleteLink/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `${token}`
+    }
+  })
+};
+
+//        api for getting the link details
+export const getLinkById = (token, id) => {
+  return fetch(`${apiURL}api/link/getLink/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `${token}`
+    }
+  });
+};
+
+//        api for updating the link info
+export const updateLink = (token, id, linkData) => {
+  return fetch(`${apiURL}api/link/updateLink/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `${token}`
+    },
+    body: JSON.stringify(linkData)
+  });
+};
+
+//        api for creating the appearance of preview 
+export const saveAppearance = (token, appearanceDetails) => {
+  return fetch(`${apiURL}api/appearance/create`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `${token}`  
+    },
+    body: JSON.stringify(appearanceDetails)
+  });
+};
+
+//      api for updating the appearance of preview
+export const updateAppearance = (userId, token, updateAppearanceDetails) => {
+  return fetch(`${apiURL}api/appearance/update/${userId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `${token}`
+    },
+    body: JSON.stringify(updateAppearanceDetails)
+  });
+};
+
+//      api for fetching the appearance details
+export const getAppearance = (userId, token) => {
+  return fetch(`${apiURL}api/appearance/get/${userId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `${token}`
+    }
+  })
+};

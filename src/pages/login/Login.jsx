@@ -93,7 +93,7 @@ const Login = () => {
           <img src={branding} alt="branding logo" />
         </div>
         <div className={styles.loginContainer}>
-          <p className={styles.heading}>Sign up to your Spark</p>
+          <p className={styles.heading}>Sign in to your Spark</p>
           <div className={styles.formContainer}>
             {/* Form for user registration */}
             <form onSubmit={handleLoginUser} className={styles.loginForm}>

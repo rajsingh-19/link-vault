@@ -110,7 +110,6 @@
     cursor: pointer;
     border-radius: 28px;
 }
-
 /*       Error message container */
 .errorContainer {
     width: 100%;
@@ -134,7 +133,6 @@
 .info span {
     text-decoration: underline;
 }
-
 /*      img  section         */
 .imgContainer {
     width: 30%;
@@ -145,4 +143,82 @@
 .imgContainer > img {
     height: 100%;
     width: 100%;
+}
+
+/*              responsiveness          */
+@media screen and (max-width: 1200px) {
+    .registerContainer {
+        width: 80%;
+        margin-left: 10%;
+    }
+    .formContainer {
+        width: 100%;
+    }
+    .heading {
+        padding-top: 60px;
+    }
+}
+@media screen and (max-width: 768px) {
+    .registerPageContainer {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        padding-bottom: 50px;
+    }
+    .heading {
+        padding-top: 0px;
+    }
+    .contentContainer {
+        width: 90%;
+    }
+    .registerContainer {
+        width: 100%;
+        margin-left: 0;
+        text-align: left;
+    }
+    .brandingLogoContainer {
+        position: static;
+        margin: 20px auto;
+    }
+    .formContainer {
+        width: 100%;
+    }
+    .imgContainer {
+        display: none;
+    }
+}
+@media screen and (max-width: 480px) {
+    .registerContainer {
+        text-align: left;
+    }
+    .heading {
+        font-size: 32px;
+        line-height: 42px;
+    }
+    .subHeading > p:first-of-type {
+        font-size: 16px;
+    }
+    .input {
+        height: 36px;
+        font-size: 13px;
+    }
+    .checkbox {
+        width: 12px;
+        height: 12px;
+    }
+    .checkboxContent {
+        font-size: 10px;
+    }
+    .registerBtn {
+        font-size: 14px;
+        height: 40px;
+    }
+    .info {
+        font-size: 10px;
+    }
+}
+@media screen and (max-width: 376px) {
+    .heading {
+        font-size: 24px;
+    }
 }

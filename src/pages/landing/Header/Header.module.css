@@ -1,5 +1,5 @@
 .header {
-    margin: 3.125rem 2rem 0rem 2rem;
+    margin: 0rem 2rem 0rem 2rem;
     border: 1px solid #E0E2D9;
     padding: 0.75rem 0.75rem 0.75rem 2.75rem;
     display: flex;
@@ -8,13 +8,11 @@
     background: #FFFFFF;
     border-radius: 120px;
 }
-
 .headerLeft {
     display: flex;
     gap: 0.25rem;
     align-items: center;
 }
-
 .headerBtn {
     background: #28A263;
     display: flex;
@@ -30,4 +28,32 @@
     border-radius: 96px;
     padding: 1rem 1.875rem 1.25rem 1.875rem;
     cursor: pointer;
+}
+.headerLeftMob {
+    display: none;
+}
+@media screen and (max-width:500px) {
+    .header {
+        margin: 0rem 1rem 0rem 1rem;
+        padding: 0.5rem 1rem;
+        border: 0.31px solid #E0E2D9;
+    }
+    .headerLeft {
+        display: none;
+    }
+    .headerLeftMob {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .headerBtn {
+        border-radius: 52px;
+        font-family: Inter;
+        font-weight: 400;
+        font-size: 13.92px;
+        line-height: 22.97px;
+        letter-spacing: 0%;
+        text-align: center;
+        padding: 0.75rem 1rem;
+    }
 }

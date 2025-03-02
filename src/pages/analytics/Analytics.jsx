@@ -8,12 +8,14 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LineChart } from '@mui/x-charts/LineChart';
 import { BarChart } from "@mui/x-charts/BarChart";
+import { PieChart } from '@mui/x-charts/PieChart';
 import { createClick, getAppTypeClicks, getClicksCountForShop, getClicksCountForSocial, getCtaCount, getMonthlyClicks, getTopLinks, getUserDeviceClicks } from "../../services";
 
 const Analytics = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [flag, setFlag] = useState(true);
+  const [appFlag, setAppFlag] = useState(true);
   const userId = localStorage.getItem('userId');
   const token = localStorage.getItem('token');
   const [ctaCounts, setCtaCounts] = useState(0);
@@ -29,23 +31,32 @@ const Analytics = () => {
     mac: 0,
     Other: 0
   });
+  const [sites, setSites] = useState({
+    Youtube: 0,
+    Instagram: 0,
+    Facebook: 0,
+    Twitter: 0
+  })
   const [deviceType, setDeviceType] = useState([]);
   const [deviceValue, setDeviceValue] = useState([]);
   const [topTitle, setTopTitle] = useState([]);
   const [topClicks, setTopClicks] = useState([]);
 
   useEffect(() => {
-    // getCtaCounts();
-    // getClicksCountsForSocial();
-    // getClicksCountsForShop();
-    // monthlyClicks();
-    // appTypeClicks();
-    // topLinks();
+    getCtaCounts();
+    getClicksCountsForSocial();
+    getClicksCountsForShop();
+    monthlyClicks();
+    topLinks();
   }, []);
 
   useEffect(() => {
-    // userDeviceClicks();
+    userDeviceClicks();
   }, [flag]);
+
+  useEffect(() => {
+    appTypeClicks();
+  }, [appFlag]);
 
   const getCtaCounts = async () => {
     try {
@@ -141,7 +152,10 @@ const Analytics = () => {
       const response = await getAppTypeClicks(userId);
       if (response.status == 200) {
         const data = await response.json();
-        console.log(data);
+        if (appFlag) {
+          updateSites(data.appTypeClicks);
+        }
+        setAppFlag(false);
       } else {
         const errorData = await response.json();
         const errorMessage = errorData.message || "An error occurred";
@@ -168,6 +182,18 @@ const Analytics = () => {
       console.log(error);
       toast.error("An unexpected error occurred:", error);
     }
+  };
+
+  const updateSites = (response) => {
+    setSites((prevSites) => ({
+      ...prevSites, // Keep existing keys
+      ...Object.fromEntries(
+        Object.entries(response).map(([key, value]) => [
+          key,
+          (prevSites[key] || 0) + value // Update existing values
+        ])
+      )
+    }));
   };
 
   const updateTopData = (data) => {
@@ -199,6 +225,55 @@ const Analytics = () => {
     });
   };
 
+  const getColor = (label) => {
+    const colorMap = {
+      Youtube: "#165534",
+      Instagram: "#94E9B8",
+      Facebook: "#3EE58F",
+      Twitter: "#21AF66",
+    };
+
+    return colorMap[label] || "#CCCCCC";
+  };
+
+  const colorMap = {
+    Youtube: "#165534",
+    Instagram: "#94E9B8",
+    Facebook: "#3EE58F",
+    Twitter: "#21AF66",
+  };
+
+  const handleDateChange = (dates) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (start || end) {
+      const normalizedStart = new Date(start);
+      normalizedStart.setHours(0, 0, 0, 0);
+
+      const normalizedEnd = new Date(end);
+      normalizedEnd.setHours(0, 0, 0, 0);
+
+      if (today < normalizedStart || today > normalizedEnd) {
+        setSites({ Youtube: 0, Instagram: 0, Facebook: 0, Twitter: 0 });
+        setDeviceType([]);
+        setDeviceValue([]);
+        setTopTitle([]);
+        setTopClicks([]);
+      } else {
+        appTypeClicks();
+        userDeviceClicks();
+        topLinks();
+      }
+    } else {
+      window.location.reload();
+    }
+  };
+
   return (
     <div className={styles.analyticsPageContainer}>
       <div className={styles.sidebarContainer}>
@@ -209,15 +284,11 @@ const Analytics = () => {
       </div>
       <div className={styles.contentContainer}>
         <div className={styles.top}>
-          <div className={styles.overview} onClick={() => createClick("67c215d7952a9ce7f3e471f5")}>Overview</div>
+          <div className={styles.overview}>Overview</div>
           <div className={styles.datePickerContainer}>
             <DatePicker
               selected={startDate}
-              onChange={(dates) => {
-                const [start, end] = dates;
-                setStartDate(start);
-                setEndDate(end);
-              }}
+              onChange={handleDateChange}
               startDate={startDate}
               endDate={endDate}
               selectsRange
@@ -277,7 +348,6 @@ const Analytics = () => {
                   data: deviceType,
                 },
               ]}
-
               yAxis={[
                 {
                   max: 10,
@@ -287,16 +357,53 @@ const Analytics = () => {
                 {
                   data: deviceValue,
                   label: "Clicks",
-                  color: "green",
+                  color: "#3EE58F",
                 },
               ]}
               width={undefined}
-              height={400}
+              height={300}
             />
           </div>
           <div className={styles.deviceGraph}>
             <div className={styles.deviceHeading}>
               Sites
+            </div>
+            <div className={styles.pieBox}>
+              <PieChart
+                series={[
+                  {
+                    data: Object.entries(sites).map(([label, value], index) => ({
+                      id: index,
+                      value: value,
+                      color: getColor(label),
+                    })),
+                  },
+                ]}
+                width={400}
+                height={200}
+              />
+              <div className={styles.appNames}>
+                {Object.entries(sites).map(([site, value]) => (
+                  <div
+                    key={site}
+                    className={styles.appNameBox}
+                  >
+                    <div className={styles.appName}>
+                      <span
+                        style={{
+                          display: "inline-block",
+                          width: "10px",
+                          height: "10px",
+                          backgroundColor: colorMap[site] || "#CCCCCC", // Default gray if no match
+                          borderRadius: "50%",
+                        }}
+                      />
+                      <span >{site}</span>
+                    </div>
+                    <span style={{ fontSize: "16px", fontWeight: "500" }}>{value}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -319,7 +426,7 @@ const Analytics = () => {
               {
                 data: topClicks,
                 label: "Clicks",
-                color: "green",
+                color: "#3EE58F",
               },
             ]}
             width={undefined}

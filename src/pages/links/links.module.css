@@ -241,7 +241,7 @@
   gap: 7px;
 }
 .linkCardListContainer{
-  height: 180px;
+  max-height: 320px;
   overflow-y: scroll;
 }
 .linkCard {
@@ -293,6 +293,14 @@
 .linkUrl > img {
   width: 16px;
   height: 16px;
+}
+.linkUrl > span {
+  display: inline-block; /* Ensures span behaves like a block for width constraints */
+  max-width: 200px; /* Adjust based on your layout */
+  white-space: nowrap; /* Prevents wrapping */
+  overflow: hidden; /* Hides overflow content */
+  text-overflow: ellipsis; /* Adds ellipsis for overflowing text */
+  vertical-align: middle; /* Aligns with the icon */
 }
 .toggleSwitchContainer {
   display: flex;
@@ -423,6 +431,9 @@
   font-weight: 400;
   color: #FFFFFFB8;
 }
+.userInfo > p:last-of-type > img {
+  margin-right: 5px;
+}
 .customColorSection {
   margin-top: 15px;
   text-align: left;
@@ -501,3 +512,68 @@
   align-items: center;
   z-index: 100;
 }
+
+/*            responsiveness        */
+@media screen and (max-width: 426px) {
+  .linkPageContainer {
+    height: auto;
+    width: 100%;
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "navbar"
+      "content"
+      "sidebar";
+    gap: 0px;
+  }
+  .navContainer {
+    height: auto;
+  }
+  .sidebarContainer {
+    height: auto;
+  }
+  .contentContainer {
+    height: auto;
+  }
+}
+@media screen and (max-width: 768px) {
+  .linkPageContainer {
+    height: auto;
+    width: 100%;
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "navbar"
+      "content"
+      "sidebar";
+    gap: 0px;
+  }
+  .navContainer {
+    height: auto;
+  }
+  .sidebarContainer {
+    height: auto;
+  }
+  .contentContainer {
+    height: auto;
+  }
+}
+@media screen and (max-width: 1023px) {
+  .linkPageContainer {
+    height: auto;
+    width: 100%;
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "navbar"
+      "content"
+      "sidebar";
+    gap: 0px;
+  }
+  .navContainer {
+    height: auto;
+  }
+  .sidebarContainer {
+    height: auto;
+  }
+  .contentContainer {
+    height: auto;
+  }
+} 

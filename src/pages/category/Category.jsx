@@ -72,7 +72,7 @@ const Category = () => {
       if(response.status === 201) {
         const resData = await response.json();
 
-        localStorage.setItem("userName", resData.result)
+        // localStorage.setItem("userName", resData.result)
         navigate("/links");
       } else {
         // Handles any errors by logging the response and showing an alert

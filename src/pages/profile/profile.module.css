@@ -1,0 +1,38 @@
+.profilePageContainer {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.profileViewContainer {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+/*              responsiveness           */
+@media (max-width: 1024px) { /* Tablets */
+    .profileViewContainer {
+        width: 50%;
+    }
+}
+@media (max-width: 768px) { /* Small tablets & large phones */
+    .profileViewContainer {
+        width: 70%;
+        /* height: auto; */
+    }
+}
+@media (max-width: 480px) { /* Small mobile devices */
+    .profileViewContainer {
+        width: 95%;
+    }
+}
+@media (max-width: 320px) { /* Small mobile devices */
+    .profileViewContainer {
+        width: 100%;
+    }
+}

@@ -20,34 +20,24 @@
     flex-direction: column;
     margin-top: 100px;
     margin-left: 20%;
-    /* border: 1px solid red; */
 }
 .heading {
-    /* font-family: "Poppins"; */
     font-size: 48px;
     font-weight: 800;
     padding-top: 48px;
     line-height: 58px;
-    /* padding: 20px; */
     margin-bottom: 10px;
 }
 .subHeading {
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
-    /* letter-spacing: 1px; */
     color: #676B5F;
     margin-bottom: 40px;
 }
-
-/* .nameCategorySection {
-
-
-} */
 .inputContainer {
     width: 580px;
     border-radius: 8px;
-    /* border: none; */
     margin-bottom: 50px;
 }
 .inputContainer > input {
@@ -61,23 +51,20 @@
     background-color: #F6F7F5;
     border: none;
     outline: none;
-
+    border-radius: 10px;
 }
 .inputContainer > input::placeholder {
     color: #000000;
 }
-
 .categorySection > p {
     font-size: 14px;
     font-weight: 600;
     line-height: 21px;
     margin-bottom: 20px;
 }
-
 .categoryBtnsContainer {
     margin-bottom: 40px;
 }
-
 .categoryBtn {
     height: 40px;
     padding: 10px 17px 9px 17px;
@@ -96,7 +83,6 @@
     border: 1px solid #252523;
     background-color: #28A263;
 }
-
 .continueBtnContainer {
     width: 592px;
     height: 48px;
@@ -112,12 +98,6 @@
     cursor: pointer;
     border-radius: 28px;
 }
-
-
-
-
-
-
 /*      img  section         */
 .imgContainer {
     width: 30%;
@@ -128,4 +108,69 @@
 .imgContainer > img {
     height: 100%;
     width: 100%;
+}
+/*              responsiveness      */
+@media screen and (max-width: 1024px) {
+    .categoryContainer {
+        width: 80%;
+        margin-left: 10%;
+    }
+    .inputContainer {
+        width: 100%;
+    }
+    .continueBtnContainer {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 768px) {
+    .categoryPageContainer {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        padding-bottom: 50px;
+    }
+    .contentContainer {
+        width: 90%;
+    }
+    .categoryContainer {
+        width: 100%;
+        margin-left: 0;
+        text-align: center;
+        margin-top: 0px;
+    }
+    .brandingLogoContainer {
+        position: static;
+        margin: 20px auto;
+    }
+    .inputContainer {
+        width: 100%;
+    }
+    .continueBtnContainer {
+        width: 100%;
+    }
+    .imgContainer {
+        display: none;
+    }
+}
+@media screen and (max-width: 480px) {
+    .heading {
+        font-size: 32px;
+        line-height: 42px;
+    }
+    .subHeading {
+        font-size: 14px;
+        line-height: 20px;
+        margin-bottom: 20px;
+    }
+    .categoryContainer {
+        text-align: left;
+        margin-top: 0px;
+    }
+    .categoryBtn {
+        font-size: 12px;
+        padding: 8px 14px;
+    }
+    .continueBtn {
+        font-size: 14px;
+    }
 }
