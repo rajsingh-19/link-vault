@@ -82,7 +82,7 @@ const Register = () => {
           password: "",
           confirmPassword: ""
         });
-
+        toast.success("Resistered Successfully");
         setCheckboxChecked(false); // Reset checkbox
         navigate("/login");
       } else {
