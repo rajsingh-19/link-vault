@@ -25,7 +25,7 @@ const App = () => {
         <Route path='/appearance' element={<ProtectedRoute><Appearance /></ProtectedRoute>} />
         <Route path='/analytics' element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
         <Route path='/settings' element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-        <Route path="/profile/:userId" element={<Profile />} />
+        <Route path="/profile" element={<Profile />} />
         {/* Catch all route for undefined paths */}
         <Route path="*" element={<NotFound />} />
       </Routes>
