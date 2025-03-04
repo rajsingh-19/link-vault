@@ -80,10 +80,11 @@
   background-color: transparent;
   color: #595959;
 }
+/*        stack layout       */
 .linkListContainer {
   width: 90%;
   height: 45%;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin-bottom: 100px;
 }
 .linkContainer {
@@ -107,6 +108,72 @@
   justify-content: center;
   align-items: center;
 }
+
+/*        grid layout        */
+.gridListContainer {
+  width: 90% !important;
+  height: 45% !important;
+  overflow-y: auto !important;
+  margin-bottom: 100px !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 10px !important;
+}
+.gridContainer {
+  width: 100%;
+  height: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #C9C9C9;
+  padding: 10px;
+  border-radius: 24px;
+  gap: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.gridIconContainer {
+  border-radius: 100px;
+  background-color: #FFFFFF;
+  height: 40px;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+/*      carousel layout      */
+.carouselListContainer {
+  height: 220px;
+  display: flex !important;
+  width: -webkit-fill-available;
+  overflow-x: scroll;
+}
+.carouselContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+  margin-right: 10px;
+  min-width: 150px;
+}
+.carouselIconContainer {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+/*        for all three layout          */
 .icon {
   width: 25px;
   height: 25px;
@@ -140,4 +207,82 @@
 .brandingContainer > img {
   width: 90px;
   height: 25px;
+}
+
+/*        appearance buttons css         */
+.f1 {
+  border-radius: 0px;
+}
+.f2 {
+  border-radius: 8px;
+}
+.f3 {
+  border-radius: 24px;
+}
+.o1 {
+  border: 1px solid #000000;
+  border-radius: 0px;
+}
+.o2 {
+  border: 1px solid #000000;
+  border-radius: 8px;
+}
+.o3 {
+  border: 1px solid #000000;
+  border-radius: 24px;
+}
+.h1 {
+  border: 1px solid #000000;
+  box-shadow: 4px 4px 0px 0px #000000;
+  border-radius: 0px;
+}
+.h2 {
+  border: 1px solid #000000;
+  box-shadow: 4px 4px 0px 0px #000000;
+  border-radius: 8px;
+}
+.h3 {
+  border: 1px solid #000000;
+  box-shadow: 4px 4px 0px 0px #000000;
+  border-radius: 24px;
+}
+.s1 {
+  box-shadow: 0px 4px 4px 0px #00000029;
+  border: none;
+  border-radius: 0px;
+}
+.s2 {
+  box-shadow: 0px 4px 4px 0px #00000029;
+  border: none;
+  border-radius: 8px;
+}
+.s3 {
+  box-shadow: 0px 4px 4px 0px #00000029;
+  border: none;
+  border-radius: 24px;
+}
+
+/*          responsiveness         */
+@media screen and (max-width: 426px) {
+  .previewCard {
+    width: 90%;
+  }
+  .previewCrossBtn {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .previewCrossBtn {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+  }
 }

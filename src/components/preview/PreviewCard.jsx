@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./preview.module.css";
-import { incrementCtaCount, getAllSocialLinks, getAllShopLinks, getUserInfo, createClick } from "../../services/index";
+import { incrementCtaCount, getAllSocialLinks, getAllShopLinks, getUserInfo, createClick, getAppearance } from "../../services/index";
 import sharingProfile from "../../assets/sharingProfile.svg";
 import userImg from "../../assets/userImg.png";
 import branding from "../../assets/branding.svg";
@@ -10,9 +10,10 @@ import facebookIcon from "../../assets/facebook.svg";
 import youtubeIcon from "../../assets/youtube.svg";
 import twiterIcon from "../../assets/twitter.svg";
 import shopIcon from "../../assets/shop.svg";
+import previewCross from "../../assets/previewCross.svg";
 import { toast } from "react-toastify";
 
-const PreviewCard = ({ bannerColor, liveProfile, modalStatus }) => {
+const PreviewCard = ({ bannerColor, liveProfile, modalStatus, hideShareButton, closePreviewModal, appearanceCustomization, setAppearanceCustomization = () => {} }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("link");
   const userId = localStorage.getItem("userId");
@@ -20,11 +21,36 @@ const PreviewCard = ({ bannerColor, liveProfile, modalStatus }) => {
   const [showLinks, setShowLinks] = useState(false); 
   const [links, setLinks] = useState([]);  
   const [cardBgColor, setCardBgColor] = useState("#F7F7F7");
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 800);
   const [userInformation, setUserInformation] = useState({
     profileImgUrl: "",
     bannerColor: "#3a2d25",
     userName: ""
-  });  
+  });
+
+  useEffect(() => {
+    fetchUserData();
+  },[]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 800);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize); // Cleanup event listener
+  }, [window.innerWidth]);
+
+  useEffect(() => {
+    if (!modalStatus) {
+      fetchAllShopLinks();
+      fetchSocialLinks();
+    }
+  }, [modalStatus]);
+  
+  useEffect(() => {
+    fetchAppearance();
+  }, []);
 
   const handleConnected = async () => {
     try {
@@ -95,17 +121,6 @@ const PreviewCard = ({ bannerColor, liveProfile, modalStatus }) => {
     }
   };
   
-  useEffect(() => {
-    if (!modalStatus) {
-      fetchAllShopLinks();
-      fetchSocialLinks();
-    }
-  }, [modalStatus]);
-    
-  useEffect(() => {
-    fetchUserData();
-  },[]);
-    
   // fn for listing the social media links
   const handleAddLink = () => {
     fetchSocialLinks();
@@ -132,7 +147,7 @@ const PreviewCard = ({ bannerColor, liveProfile, modalStatus }) => {
     try {
       const res = await createClick(linkId);
       const resData = await res.json();
-      // console.log(resData.redirectUrl);
+
       if (resData?.redirectUrl) {
         window.location.href = resData.redirectUrl;
       } else {
@@ -144,14 +159,48 @@ const PreviewCard = ({ bannerColor, liveProfile, modalStatus }) => {
     }
   };
 
+  const fetchAppearance = async () => {
+    try {
+      const res = await getAppearance(userId, token);
+      if(res.status === 200) {
+        const resData = await res.json();
+        const fetchedAppearanceDetails = resData.data;
+  
+        setAppearanceCustomization({
+          layout: fetchedAppearanceDetails?.layout,
+          buttons: {
+            fill: fetchedAppearanceDetails?.buttons?.fill,
+            outline: fetchedAppearanceDetails?.buttons?.outline,
+            hardShadow: fetchedAppearanceDetails?.buttons?.hardShadow,
+            softShadow: fetchedAppearanceDetails?.buttons?.softShadow,
+            special: fetchedAppearanceDetails?.buttons?.special,
+            btnColor: fetchedAppearanceDetails?.buttons?.btnColor,
+            btnFontColor: fetchedAppearanceDetails?.buttons?.btnFontColor
+          },
+          fonts: {
+            font: fetchedAppearanceDetails?.fonts?.font,
+            color: fetchedAppearanceDetails?.fonts?.color
+          },
+          themes: fetchedAppearanceDetails?.themes
+        })
+      }
+    } catch (error) {
+      console.error("You have not applied any appearance customization", error);
+    }
+  };
+
   return (
-    <div className={styles.previewCard} style={{ backgroundColor: cardBgColor}}>
+    <div className={styles.previewCard} style={{ backgroundColor: appearanceCustomization?.themes || cardBgColor }}>
       <div className={styles.banner} style={{ backgroundColor: bannerColor || userInformation.bannerColor }}>
-        <button className={styles.sharingBtn} onClick={handleShareProfile}>
-          <img src={sharingProfile} alt="sharing profile icon" />
-        </button>
+        {
+          !hideShareButton && (
+            <button className={styles.sharingBtn} onClick={handleShareProfile}>
+              <img src={sharingProfile} alt="sharing profile icon" />
+            </button>
+          )
+        }
         <img className={styles.profileImage} src={liveProfile || userInformation.profileImgUrl || userImg} alt="Profile" />
-        <span className={styles.userName}>{`@${userInformation.userName}`}</span>
+        <span className={styles.userName} style={{ fontFamily: appearanceCustomization?.fonts?.font || "Poppins" , color: appearanceCustomization?.fonts?.color || "#FFFFFF" }}>{`@${userInformation.userName}`}</span>
       </div>
       <div className={styles.tabButtons}>
         <button className={`${styles.tabButton} ${activeTab === "link" ? styles.active : styles.inactive}`} onClick={handleAddLink} >
@@ -161,7 +210,13 @@ const PreviewCard = ({ bannerColor, liveProfile, modalStatus }) => {
           Shop
         </button>
       </div>
-      <div className={styles.linkListContainer}>
+      <div className={appearanceCustomization?.layout === "Stack" 
+      ? styles.linkListContainer 
+      : appearanceCustomization?.layout === "Grid" 
+      ? styles.gridListContainer 
+      : appearanceCustomization?.layout === "Carousel" 
+      ? styles.carouselListContainer 
+      : styles.linkListContainer}>
       {
         showLinks && links.map(({title, appType, _id}) => {
           // Find the correct social icon based on appType
@@ -171,11 +226,39 @@ const PreviewCard = ({ bannerColor, liveProfile, modalStatus }) => {
           const src = activeTab === "link" ? matchedSocial?.src || userImg : shop.src; 
 
           return (
-            <div key={_id} className={styles.linkContainer} onClick={() => handleGoToLink(_id)}>
-              <div className={styles.iconContainer}>
+            <div key={_id} 
+              className={`
+              ${appearanceCustomization?.layout === "Stack" ? styles.linkContainer : ""}
+              ${appearanceCustomization?.layout === "Grid" ? styles.gridContainer : styles.linkContainer}
+              ${appearanceCustomization?.layout === "Carousel" ? styles.carouselContainer : styles.linkContainer}
+              ${appearanceCustomization?.buttons?.fill === "f1" ? styles.f1 : ""}
+              ${appearanceCustomization?.buttons?.fill === "f2" ? styles.f2 : ""}
+              ${appearanceCustomization?.buttons?.fill === "f3" ? styles.f3 : ""}
+              ${appearanceCustomization?.buttons?.outline === "o1" ? styles.o1 : ""}
+              ${appearanceCustomization?.buttons?.outline === "o2" ? styles.o2 : ""}
+              ${appearanceCustomization?.buttons?.outline === "o3" ? styles.o3 : ""}
+              ${appearanceCustomization?.buttons?.hardShadow === "h1" ? styles.h1 : ""}
+              ${appearanceCustomization?.buttons?.hardShadow === "h2" ? styles.h2 : ""}
+              ${appearanceCustomization?.buttons?.hardShadow === "h3" ? styles.h3 : ""}
+              ${appearanceCustomization?.buttons?.softShadow === "s1" ? styles.s1 : ""}
+              ${appearanceCustomization?.buttons?.softShadow === "s2" ? styles.s2 : ""}
+              ${appearanceCustomization?.buttons?.softShadow === "s3" ? styles.s3 : ""}
+              `}
+              style={{ backgroundColor: appearanceCustomization?.buttons?.btnColor  }}
+              // className={styles.linkContainer}
+              onClick={() => handleGoToLink(_id)}>
+              <div className={appearanceCustomization?.layout === "Stack"
+                ? styles.iconContainer
+                : appearanceCustomization?.layout === "Grid" 
+                ? styles.gridIconContainer
+                : appearanceCustomization?.layout === "Carousel"
+                ? styles.carouselIconContainer
+                : styles.iconContainer} >
                 <img className={styles.icon} src={src} alt={`${title} icon`} />
               </div>
-              <span className={styles.linkText}>{title}</span>
+              <span className={styles.linkText} style={{ color: appearanceCustomization?.buttons?.btnFontColor }}>
+                {title}
+              </span>
             </div>
           );
         })
@@ -183,9 +266,17 @@ const PreviewCard = ({ bannerColor, liveProfile, modalStatus }) => {
       </div>
       {/*     footer area      */}
       <button className={styles.getConnected} onClick={handleConnected}>Get Connected</button>
-      <div className={styles.brandingContainer}>
+      {
+        isMobile && !hideShareButton ? (
+          <button onClick={closePreviewModal} className={styles.previewCrossBtn}>
+          <img src={previewCross} alt="preview cross icon" />
+        </button>
+      ) : !isMobile || hideShareButton ? (
+        <div className={styles.brandingContainer}>
         <img src={branding} alt="branding logo" />
       </div>
+      ): null
+    }
     </div>
   );
 };

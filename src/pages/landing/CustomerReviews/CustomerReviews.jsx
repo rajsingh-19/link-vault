@@ -1,7 +1,6 @@
 import styles from './CustomerReviews.module.css';
 
 const CustomerReviews = () => {
-
     const testimonials = [
         {
             title: "Amazing tool! Saved me months",
@@ -28,7 +27,6 @@ const CustomerReviews = () => {
             position: "Director, Spark.com",
         }
     ];
-
 
     return (
         <div className={styles.container}>

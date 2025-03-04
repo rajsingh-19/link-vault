@@ -16,9 +16,9 @@ const Limitless = () => {
             </div>
             <div className={styles.right}>
                 <div className={styles.rightTop}>
-                    <img src={square1} alt="" />
-                    <img src={square2} alt="" />
-                    <img src={wide} alt="" />
+                    <img src={square1} alt="" className={styles.image} />
+                    <img src={square2} alt="" className={styles.image} />
+                    <img src={wide} alt="" className={styles.image1} />
                 </div>
                 <div className={styles.rightContent}>
                     Share your content in limitless ways on your Spark

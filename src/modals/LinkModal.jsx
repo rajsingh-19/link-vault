@@ -52,10 +52,8 @@ const LinkModal = ({ handleCloseModal, id, modalTab }) => {
       const result = await getLinkById(token, id);
       if (result.status === 200) {
         const resData = await result.json();
-
         const linkDetails = resData.data;
 
-        console.log(linkDetails);
         setLinkData({
           title: linkDetails.title,
           url: linkDetails.url,
@@ -136,8 +134,10 @@ const LinkModal = ({ handleCloseModal, id, modalTab }) => {
   const handleToggleChange = async () => {
     if (id) {
       await handleUpdateLink(); // Call update API if updating an existing link
+      // setIsChecked(prev => !prev);
     } else {
       await handleSaveLink(); // Call create API if adding a new link
+      // setIsChecked(prev => !prev);
     }
   };
 
@@ -177,7 +177,6 @@ const LinkModal = ({ handleCloseModal, id, modalTab }) => {
   };
 
   const handleClearDetails = () => {
-    console.log("clear");
     setLinkData({
       title: "",
       url: "",

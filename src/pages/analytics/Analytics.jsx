@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { LineChart } from '@mui/x-charts/LineChart';
 import { BarChart } from "@mui/x-charts/BarChart";
 import { PieChart } from '@mui/x-charts/PieChart';
-import { createClick, getAppTypeClicks, getClicksCountForShop, getClicksCountForSocial, getCtaCount, getMonthlyClicks, getTopLinks, getUserDeviceClicks } from "../../services";
+import { getAppTypeClicks, getClicksCountForShop, getClicksCountForSocial, getCtaCount, getMonthlyClicks, getTopLinks, getUserDeviceClicks } from "../../services";
 
 const Analytics = () => {
   const [startDate, setStartDate] = useState(null);
@@ -32,9 +32,9 @@ const Analytics = () => {
     Other: 0
   });
   const [sites, setSites] = useState({
-    Youtube: 0,
+    YouTube: 0,
     Instagram: 0,
-    Facebook: 0,
+    FaceBook: 0,
     Twitter: 0
   })
   const [deviceType, setDeviceType] = useState([]);
@@ -379,7 +379,7 @@ const Analytics = () => {
                     })),
                   },
                 ]}
-                width={400}
+                width={undefined}
                 height={200}
               />
               <div className={styles.appNames}>
@@ -400,7 +400,7 @@ const Analytics = () => {
                       />
                       <span >{site}</span>
                     </div>
-                    <span style={{ fontSize: "16px", fontWeight: "500" }}>{value}</span>
+                    <span>{value}</span>
                   </div>
                 ))}
               </div>

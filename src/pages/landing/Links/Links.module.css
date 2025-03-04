@@ -39,6 +39,7 @@
     letter-spacing: 0.16px;
     color: #1E2330;
 }
+/*              responsiveness        */
 @media screen and (max-width:500px) {
     .container {
         margin: 2rem 1rem 0rem 1rem;

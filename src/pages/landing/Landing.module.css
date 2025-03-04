@@ -1,6 +1,7 @@
 .container {
     background: #FAFAFA;
     padding-top: 3.125rem;
+    padding-bottom: 2.5rem;
 }
 @media screen and (max-width:500px) {
     .container {

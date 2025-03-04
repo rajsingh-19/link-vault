@@ -3,6 +3,7 @@ import styles from "./settings.module.css";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import { getUserInfo, updateUser } from "../../services";
+import { toast } from "react-toastify";
 
 const Settings = () => {
   const [updateFormData, setUpdateFormData] = useState({
@@ -37,7 +38,7 @@ const Settings = () => {
       toast.error("An error occurred while fetching user info");
     }
   };
-  
+
   // Call fetchUserInfo on component mount
   useEffect(() => {
     fetchUserInfo();
@@ -46,17 +47,17 @@ const Settings = () => {
   // Form validation logic
   const validateForm = () => {
     const errors = {};
-  
+
     // Validate First Name if modified
     if (updateFormData.firstName !== undefined && !updateFormData.firstName.trim()) {
       errors.firstName = "First name required*";
     }
-  
+
     // Validate Last Name if modified
     if (updateFormData.lastName !== undefined && !updateFormData.lastName.trim()) {
       errors.lastName = "Last name required*";
     }
-  
+
     // Validate Email if modified
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (updateFormData.email !== undefined) {
@@ -66,7 +67,7 @@ const Settings = () => {
         errors.email = "Invalid Email*";
       }
     }
-  
+
     // Validate Password if modified
     if (updateFormData.password !== undefined) {
       if (!updateFormData.password) {
@@ -81,7 +82,7 @@ const Settings = () => {
         }
       }
     }
-  
+
     // Validate Confirm Password only if both fields are modified
     if (updateFormData.password !== undefined || updateFormData.confirmPassword !== undefined) {
       if (!updateFormData.confirmPassword) {
@@ -90,10 +91,10 @@ const Settings = () => {
         errors.confirmPassword = "Password did not match*";
       }
     }
-  
+
     setErrors(errors);
     return Object.keys(errors).length === 0;
-  };  
+  };
 
   //               Function to handle form submission and register the user
   const handleUpdateUser = async (e) => {
@@ -106,8 +107,8 @@ const Settings = () => {
     try {
       const res = await updateUser(updateFormData, userId, token); // Calls the `update` function with the form data
       if (res.status === 200) {
-        console.log("User updated successfully!");
-        
+        toast.success("User updated successfully!");
+
         // Clear password before fetching user info
         setUpdateFormData((prevData) => ({
           ...prevData,

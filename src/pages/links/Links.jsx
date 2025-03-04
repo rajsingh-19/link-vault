@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import styles from "./links.module.css";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import { getUserInfo, updateUserInfo, getAllSocialLinks, getAllShopLinks, deleteLink } from "../../services/index";
+import { getUserInfo, updateUserInfo, getAllSocialLinks, getAllShopLinks, deleteLink, getAppearance } from "../../services/index";
 import Preview from "../../components/preview/PreviewCard";
 //      profile
 import profileImg from "../../assets/userImg.png";
@@ -11,6 +11,7 @@ import shopIcon from "../../assets/shop.svg";
 import deleteIcon from "../../assets/delete.svg";
 import editIcon from "../../assets/edit.svg";
 import clicksIcon from "../../assets/clicksIcon.svg";
+import previewIcon from "../../assets/previewIcon.svg";
 //      banner
 import sparkLogo from "../../assets/sparkLogo.svg";
 //      modal
@@ -19,26 +20,94 @@ import { toast } from "react-toastify";
 
 const Links = () => {
   const [modalStatus, setModalStatus] = useState(false);
-  const [flag, setFlag] = useState(false);
-  const [image, setImage] = useState(null);
   const [showLinks, setShowLinks] = useState(false); 
-  // const [bio, setBio] = useState("");
   const maxLength = 80;
   const [activeTab, setActiveTab] = useState("link");
   const [links, setLinks] = useState([]);
-  // const [showLinks, setShowLinks] = useState(false);
   const [bgColor, setBgColor] = useState("#3a2d25");
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const [profileImgUrl, setProfileImgUrl] = useState(""); // Default empty image
   const [editStatus, setEditStatus] = useState(false);
   const [linkIdToEdit, setLinkIdToEdit] = useState(null);
+  const [previewModalStatus, setPreviewModalStatus] = useState(false);
   const [updateUserInformation, setUpdateUserInformation] = useState({
     bio: "",
     profileImgUrl: "",
     bannerColor: "#3a2d25",
     userName: ""
   });
+  const [customization, setCustomization] = useState({
+    layout: "Stack",
+    buttons: {
+      fill: "",
+      outline: "",
+      hardShadow: "",
+      softShadow: "",
+      special: "",
+      btnColor: "#FFFFFF",
+      btnFontColor: "#888888"
+    },
+    fonts: {
+      font: "Poppins",
+      color: "#FFFFFF"
+    },
+    themes: ""
+  });
+
+  useEffect(() => {
+    if(links.length >= 1) {
+      setShowLinks(true);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!modalStatus) {
+      if(activeTab === "link") {
+        fetchSocialLinks();
+      } else {
+        fetchAllShopLinks();
+      }
+    }
+  }, [modalStatus]);
+  
+  useEffect(() => {
+    fetchUserData();
+  },[]);
+
+  useEffect(() => {
+    const fetchAppearance = async () => {
+      try {
+        const res = await getAppearance(userId, token);
+        if (res.status === 200) {
+          const resData = await res.json();
+          const getResData = resData.data;
+
+          setCustomization({
+            layout: getResData?.layout,
+            buttons: {
+              fill: getResData?.buttons?.fill,
+              outline: getResData?.buttons?.outline,
+              hardShadow: getResData?.buttons?.hardShadow,
+              softShadow: getResData?.buttons?.softShadow,
+              special: getResData?.buttons?.special,
+              btnColor: getResData?.buttons?.btnColor,
+              btnFontColor: getResData?.buttons?.btnFontColor
+            },
+            fonts: {
+              font: getResData?.fonts?.font,
+              color: getResData?.fonts?.color
+            },
+            themes: getResData?.themes
+          }); 
+        }
+      } catch (error) {
+        console.error("Failed to fetch appearance settings", error);
+      }
+    };
+    
+    fetchAppearance();
+  }, [userId, token]);
   
   //      profile section functions
   // fn for image upload
@@ -80,7 +149,6 @@ const Links = () => {
   
   // fn for remove the uploaded image
   const handleRemoveImage = () => {
-    // setImage(null);
     setProfileImgUrl("");
     setUpdateUserInformation((prev) => ({
       ...prev,
@@ -98,7 +166,6 @@ const Links = () => {
 
   // fn for banner color update 
   const handleBannerColorChange = (color) => {
-    // setBgColor(color);
     setUpdateUserInformation(prev => ({
       ...prev,
       bannerColor: color
@@ -170,26 +237,6 @@ const Links = () => {
       toast.error("Failed to load user data.");
     }
   };
-  
-  useEffect(() => {
-    if(links.length >= 1) {
-      setShowLinks(true);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!modalStatus) {
-      if(activeTab === "link") {
-        fetchSocialLinks();
-      } else {
-        fetchAllShopLinks();
-      }
-    }
-  }, [modalStatus]);
-  
-  useEffect(() => {
-    fetchUserData();
-  },[]);
 
   // fn for listing the social media links
   const handleAddLink = () => {
@@ -242,6 +289,14 @@ const Links = () => {
   const handleCloseModal = () => {
     setModalStatus(false);
   };
+
+  const handleShowPreview = () => {
+    setPreviewModalStatus(true);
+  };
+
+  const handleClosePreview = () => {
+    setPreviewModalStatus(false);
+  };
     
   return (
     <div className={styles.linkPageContainer}>
@@ -257,7 +312,7 @@ const Links = () => {
       <div className={styles.contentContainer}>
         {/*       left section - Preview                */}
         <div className={styles.previewSection}>
-          <Preview bannerColor={updateUserInformation.bannerColor} liveProfile={profileImgUrl} modalStatus={modalStatus} />
+          <Preview bannerColor={updateUserInformation.bannerColor} liveProfile={profileImgUrl} modalStatus={modalStatus} appearanceCustomization={customization} />
         </div>
         {/*       right section - profile, link card, banner   */}
         <div className={styles.linksSection}>
@@ -266,8 +321,10 @@ const Links = () => {
             <p>Profile</p>
             <div className={styles.profileContainer}>
               <div className={styles.firstSection}>
-                <div className={styles.profileImageContainer}>
-                  <img src={updateUserInformation.profileImgUrl || profileImg} alt="Profile image" />
+                <div className={styles.imgBox}>
+                  <div className={styles.profileImageContainer}>
+                    <img src={updateUserInformation.profileImgUrl || profileImg} alt="Profile image" />
+                  </div>
                 </div>
                 <div className={styles.imageButtons}>
                   <label className={styles.uploadBtn}>
@@ -389,6 +446,13 @@ const Links = () => {
           </div>
         </div>
       </div>
+      {/*           preview btn for small screens      */}
+      {
+        <button className={styles.previewBtn} onClick={handleShowPreview}>
+          <img src={previewIcon} alt="preview btn icon" />
+          Preview
+        </button>
+      }
       {/*             Modal Container          */}
       {editStatus ?
         (modalStatus && (
@@ -398,6 +462,14 @@ const Links = () => {
         (modalStatus && (<div className={styles.modalViewContainer}>
           <LinkModal handleCloseModal={handleCloseModal}  modalTab={activeTab} />
         </div>))
+      }
+      {/*           Preview Modal Container */}
+      {
+        previewModalStatus && (
+          <div className={styles.previewModalContainer}>
+            <Preview closePreviewModal={handleClosePreview} style={{display: previewModalStatus ? "block" : ""}} appearanceCustomization={customization} />
+          </div>
+        )
       }
     </div>
   )

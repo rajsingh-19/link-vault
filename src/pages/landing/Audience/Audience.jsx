@@ -15,7 +15,7 @@ const Audience = () => {
                     Analyze your audience and keep your followers engaged
                 </div>
                 <div className={styles.rightContent}>
-                    Track your engagement over time, monitor revenue and learn what’s converting your audience. Make informed updates on the fly to keep them coming back.
+                    Track your engagement over time, monitor revenue and learn what's converting your audience. Make informed updates on the fly to keep them coming back.
                 </div>
             </div>
         </div>

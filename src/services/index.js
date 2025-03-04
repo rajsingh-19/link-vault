@@ -232,26 +232,26 @@ export const updateLink = (token, id, linkData) => {
 };
 
 //        api for creating the appearance of preview 
-export const saveAppearance = (token, appearanceDetails) => {
-  return fetch(`${apiURL}api/appearance/create`, {
+export const saveAppearance = (userId, token, customization) => {
+  return fetch(`${apiURL}api/appearance/create/${userId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `${token}`  
     },
-    body: JSON.stringify(appearanceDetails)
+    body: JSON.stringify(customization)
   });
 };
 
 //      api for updating the appearance of preview
-export const updateAppearance = (userId, token, updateAppearanceDetails) => {
+export const updateAppearance = (userId, token, customization) => {
   return fetch(`${apiURL}api/appearance/update/${userId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `${token}`
     },
-    body: JSON.stringify(updateAppearanceDetails)
+    body: JSON.stringify(customization)
   });
 };
 

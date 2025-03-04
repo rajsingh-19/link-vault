@@ -112,6 +112,7 @@
 /*              responsiveness      */
 @media screen and (max-width: 1024px) {
     .categoryContainer {
+        margin-top: 50px;
         width: 80%;
         margin-left: 10%;
     }

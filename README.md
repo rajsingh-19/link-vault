@@ -1,12 +1,66 @@
-# React + Vite
+# Link Vault App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Setup Instructions
 
-Currently, two official plugins are available:
+### Prerequisites
+  Node.js (v16+ recommended)
+  npm or yarn
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Installation
+    Clone the repository:
+    git clone <repository-url>
+    cd link-vault-app
 
-## Expanding the ESLint configuration
+### Install dependencies:
+    npm install
+    ### or
+    yarn install
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Start the development server:
+    npm run dev
+    ### or
+    yarn dev
+
+### Open the application in your browser at http://localhost:5173/ (default Vite port).
+
+
+## About
+This is a Link Vault App, a Mini Link Management Platform, inspired by Linktree. Users can create a personalized link-sharing profile, customize its appearance, and track analytics for their shared links.
+
+## Features Implemented
+1. Landing Page
+
+    A public-facing landing page that is fully responsive across all devices.
+
+2. Signup & Login Page
+
+    Users can sign up using an email, password, and username with basic validations such as unique email checks and password strength verification. Passwords are securely hashed using bcrypt. The login system supports authentication via JWT or session-based methods. A secure logout option ensures the user session is properly ended.
+
+3. Dashboard
+
+    The dashboard serves as the central hub where users can create their profile page by adding social media links (Instagram, Twitter, etc.), a profile picture, a banner image, and links to shops or products. Users can also manage their list of links by adding, editing, or deleting them while viewing a real-time preview of their public sharable link profile.
+
+4. Appearance Customization
+
+    Users can personalize their profile with various customization options. They can choose from pre-designed background themes, customize button shapes, colors, and designs, and select predefined layouts for displaying links, images, and icons.
+
+5. Analytics Page
+
+    Users can track unique views where only one view per unique IP per link is counted, preventing duplicate counts from the same user or device. Analytics include tracking the number of clicks per link, device type (mobile, desktop, tablet), geographic location (country/city), and referring sources (social media, direct, etc.). All analytics are visualized through bar charts and pie charts.
+
+6. Settings Page
+   
+    Users can manage their accounts by updating their name, email, and password. They also have the option to delete their account, which removes all associated data, including their profile and links.
+
+7. Responsive Design
+
+    Ensures the platform works seamlessly on both desktop and mobile devices.
+
+8. Profile Sharing Page
+
+    user can share the profile to others
+    
+
+***************************************************************************
+## Live Link : https://linkvaultapp.netlify.app/
+
