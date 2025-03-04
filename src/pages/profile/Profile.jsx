@@ -4,7 +4,7 @@ import { getAppearance, getUserInfo } from "../../services";
 import PreviewCard from "../../components/preview/PreviewCard";
 
 const Profile = () => {
-  const userId = localStorage.getItem('userId');
+  // const userId = localStorage.getItem('userId');
   const token = localStorage.getItem('token');
   const [customization, setCustomization] = useState({
     layout: "Stack",
@@ -23,6 +23,27 @@ const Profile = () => {
     },
     themes: ""
   });
+
+  let userId;
+  
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const res = await getUserInfo(userId, token);
+        
+        if (res.status === 200) {
+          const resData = await res.json();
+          const result = await resData.result;
+  
+          userId = result.userId;
+        };
+      } catch (error) {
+        console.error("Failed to fetch user data:", error);
+        toast.error("Failed to load user data.");
+      }
+    };
+    fetchUserData();
+  }, []);
     
   useEffect(() => {
     const fetchAppearance = async () => {
@@ -57,25 +78,6 @@ const Profile = () => {
     
     fetchAppearance();
   }, []);
-
-  useEffect(() => {
-      const fetchUserData = async () => {
-        try {
-          const res = await getUserInfo(userId, token);
-          
-          if (res.status === 200) {
-            const resData = await res.json();
-            const result = await resData.result;
-    
-            userId = result.userId;
-          };
-        } catch (error) {
-          console.error("Failed to fetch user data:", error);
-          toast.error("Failed to load user data.");
-        }
-      };
-      fetchUserData();
-  }, [])
   
   return (
     <div className={styles.profilePageContainer}>
