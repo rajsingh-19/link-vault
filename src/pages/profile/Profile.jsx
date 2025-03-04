@@ -4,7 +4,7 @@ import { getAppearance, getUserInfo } from "../../services";
 import PreviewCard from "../../components/preview/PreviewCard";
 
 const Profile = () => {
-  // const userId = localStorage.getItem('userId');
+  let userId = localStorage.getItem('userId');
   const token = localStorage.getItem('token');
   const [customization, setCustomization] = useState({
     layout: "Stack",
@@ -24,8 +24,6 @@ const Profile = () => {
     themes: ""
   });
 
-  let userId;
-  
   useEffect(() => {
     const fetchUserData = async () => {
       try {
