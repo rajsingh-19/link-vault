@@ -5,7 +5,7 @@ import { getAppearance, getUserInfo } from "../../services";
 import PreviewCard from "../../components/preview/PreviewCard";
 
 const Profile = () => {
-  const { userId } = useParams;
+  const { userId } = useParams();
   // let userId = localStorage.getItem('userId');
   const token = localStorage.getItem('token');
   const [customization, setCustomization] = useState({
