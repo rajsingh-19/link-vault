@@ -67,7 +67,7 @@ const Analytics = () => {
       } else {
         const errorData = await response.json();
         const errorMessage = errorData.message || "An error occurred";
-        toast.error(errorMessage);
+        // toast.error(errorMessage);
       }
     } catch (error) {
       console.log(error);
@@ -84,7 +84,7 @@ const Analytics = () => {
       } else {
         const errorData = await response.json();
         const errorMessage = errorData.message || "An error occurred";
-        toast.error(errorMessage);
+        // toast.error(errorMessage);
       }
     } catch (error) {
       console.log(error);
@@ -101,7 +101,7 @@ const Analytics = () => {
       } else {
         const errorData = await response.json();
         const errorMessage = errorData.message || "An error occurred";
-        toast.error(errorMessage);
+        // toast.error(errorMessage);
       }
     } catch (error) {
       console.log(error);
@@ -119,7 +119,7 @@ const Analytics = () => {
       } else {
         const errorData = await response.json();
         const errorMessage = errorData.message || "An error occurred";
-        toast.error(errorMessage);
+        // toast.error(errorMessage);
       }
     } catch (error) {
       console.log(error);
@@ -139,7 +139,7 @@ const Analytics = () => {
       } else {
         const errorData = await response.json();
         const errorMessage = errorData.message || "An error occurred";
-        toast.error(errorMessage);
+        // toast.error(errorMessage);
       }
     } catch (error) {
       console.log(error);
@@ -159,7 +159,7 @@ const Analytics = () => {
       } else {
         const errorData = await response.json();
         const errorMessage = errorData.message || "An error occurred";
-        toast.error(errorMessage);
+        // toast.error(errorMessage);
       }
     } catch (error) {
       console.log(error);
@@ -176,7 +176,7 @@ const Analytics = () => {
       } else {
         const errorData = await response.json();
         const errorMessage = errorData.message || "An error occurred";
-        toast.error(errorMessage);
+        // toast.error(errorMessage);
       }
     } catch (error) {
       console.log(error);
