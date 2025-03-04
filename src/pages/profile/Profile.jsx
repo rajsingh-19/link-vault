@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+// import React, { useState, useEffect } from "react";
+import React from "react";
 import styles from "./profile.module.css";
 // import { getAppearance } from "../../services";
 import PreviewCard from "../../components/preview/PreviewCard";
 
 const Profile = () => {
-  const userId = localStorage.getItem('userId');
-  const token = localStorage.getItem('token');
+  // const userId = localStorage.getItem('userId');
+  // const token = localStorage.getItem('token');
   // const [customization, setCustomization] = useState({
   //   layout: "Stack",
   //   buttons: {
