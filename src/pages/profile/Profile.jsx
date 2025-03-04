@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./profile.module.css";
-import { getAppearance } from "../../services";
+import { getAppearance, getUserInfo } from "../../services";
 import PreviewCard from "../../components/preview/PreviewCard";
 
 const Profile = () => {
@@ -57,12 +57,30 @@ const Profile = () => {
     
     fetchAppearance();
   }, []);
+
+  useEffect(() => {
+      const fetchUserData = async () => {
+        try {
+          const res = await getUserInfo(userId, token);
+          
+          if (res.status === 200) {
+            const resData = await res.json();
+            const result = await resData.result;
+    
+            userId = result.userId;
+          };
+        } catch (error) {
+          console.error("Failed to fetch user data:", error);
+          toast.error("Failed to load user data.");
+        }
+      };
+      fetchUserData();
+  }, [])
   
   return (
     <div className={styles.profilePageContainer}>
         <div className={styles.profileViewContainer}>
-            {/* <PreviewCard hideShareButton={true} appearanceCustomization={customization} /> */}
-            <PreviewCard hideShareButton={true} />
+            <PreviewCard hideShareButton={true} appearanceCustomization={customization} />
         </div>
     </div>
   )
