@@ -57,12 +57,11 @@ export const updateUser = (updateFormData, userId, token) => {
 };
 
 //              update the cta through userid
-export const incrementCtaCount = (userId, token) => {
+export const incrementCtaCount = (userId) => {
   return fetch(`${apiURL}api/user/increment/${userId}`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `${token}`,
+      'Content-Type': 'application/json'
     },
   });
 };

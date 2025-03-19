@@ -54,11 +54,11 @@ const PreviewCard = ({ sharingUserId, bannerColor, liveProfile, modalStatus, hid
 
   const handleConnected = async () => {
     try {
-      if (!userId || !token) {
+      if (!userId) {
         console.error("User ID or Token is missing");
         return;
       };
-      await incrementCtaCount(userId, token);
+      await incrementCtaCount(userId);
       navigate('/');
     } catch (error) {
       console.error("Error incrementing CTA count:", error);
