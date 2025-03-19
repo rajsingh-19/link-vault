@@ -5,9 +5,7 @@ import { getAppearance, getUserInfo } from "../../services";
 import PreviewCard from "../../components/preview/PreviewCard";
 
 const Profile = () => {
-  const { userId, token } = useParams();
-  // let userId = localStorage.getItem('userId');
-  // const token = localStorage.getItem('token');
+  const { userId } = useParams();
   const [customization, setCustomization] = useState({
     layout: "Stack",
     buttons: {
@@ -63,7 +61,7 @@ const Profile = () => {
   return (
     <div className={styles.profilePageContainer}>
         <div className={styles.profileViewContainer}>
-            <PreviewCard hideShareButton={true} appearanceCustomization={customization} />
+            <PreviewCard hideShareButton={true} appearanceCustomization={customization} userId={userId} />
         </div>
     </div>
   )

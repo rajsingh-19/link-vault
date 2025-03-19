@@ -13,10 +13,10 @@ import shopIcon from "../../assets/shop.svg";
 import previewCross from "../../assets/previewCross.svg";
 import { toast } from "react-toastify";
 
-const PreviewCard = ({ bannerColor, liveProfile, modalStatus, hideShareButton, closePreviewModal, appearanceCustomization, setAppearanceCustomization = () => {} }) => {
+const PreviewCard = ({ userId, bannerColor, liveProfile, modalStatus, hideShareButton, closePreviewModal, appearanceCustomization, setAppearanceCustomization = () => {} }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("link");
-  const userId = localStorage.getItem("userId");
+  const userId = localStorage.getItem("userId") || userId;
   const token = localStorage.getItem("token");
   const [showLinks, setShowLinks] = useState(false); 
   const [links, setLinks] = useState([]);  
@@ -137,7 +137,7 @@ const PreviewCard = ({ bannerColor, liveProfile, modalStatus, hideShareButton, c
   const shop =  {name: "shop", src: shopIcon};
 
   const handleShareProfile = () => {
-    const profileLink = `${window.location.origin}/profile/${userId}/${token}`;
+    const profileLink = `${window.location.origin}/profile/${userId}`;
     navigator.clipboard.writeText(profileLink)
       .then(() => toast.success("Copied to clipboard."))
       .catch((err) => console.error("Failed to copy: ", err));
