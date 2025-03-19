@@ -61,7 +61,7 @@ const Profile = () => {
   return (
     <div className={styles.profilePageContainer}>
         <div className={styles.profileViewContainer}>
-            <PreviewCard hideShareButton={true} appearanceCustomization={customization} userId={userId} />
+            <PreviewCard hideShareButton={true} appearanceCustomization={customization} sharingUserId={userId} />
         </div>
     </div>
   )

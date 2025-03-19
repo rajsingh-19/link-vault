@@ -13,10 +13,10 @@ import shopIcon from "../../assets/shop.svg";
 import previewCross from "../../assets/previewCross.svg";
 import { toast } from "react-toastify";
 
-const PreviewCard = ({ userId, bannerColor, liveProfile, modalStatus, hideShareButton, closePreviewModal, appearanceCustomization, setAppearanceCustomization = () => {} }) => {
+const PreviewCard = ({ sharingUserId, bannerColor, liveProfile, modalStatus, hideShareButton, closePreviewModal, appearanceCustomization, setAppearanceCustomization = () => {} }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("link");
-  const userId = localStorage.getItem("userId") || userId;
+  const userId = localStorage.getItem("userId") || sharingUserId;
   const token = localStorage.getItem("token");
   const [showLinks, setShowLinks] = useState(false); 
   const [links, setLinks] = useState([]);  
