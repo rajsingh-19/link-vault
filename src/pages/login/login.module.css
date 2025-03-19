@@ -71,6 +71,7 @@
     border: none;
     outline: none;
     background-color: transparent;
+    cursor: pointer;
 }
 .loginBtn {
     width: 100%;

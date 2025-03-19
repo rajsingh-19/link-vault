@@ -137,7 +137,7 @@ const PreviewCard = ({ bannerColor, liveProfile, modalStatus, hideShareButton, c
   const shop =  {name: "shop", src: shopIcon};
 
   const handleShareProfile = () => {
-    const profileLink = `${window.location.origin}/profile/${userId}`;
+    const profileLink = `${window.location.origin}/profile/${userId}/${token}`;
     navigator.clipboard.writeText(profileLink)
       .then(() => toast.success("Copied to clipboard."))
       .catch((err) => console.error("Failed to copy: ", err));
