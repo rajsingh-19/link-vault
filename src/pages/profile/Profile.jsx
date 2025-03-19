@@ -26,24 +26,28 @@ const Profile = () => {
     themes: ""
   });
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const res = await getUserInfo(userId, token);
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const res = await getUserInfo(userId, token);
+  //       console.log(userId);
+  //       console.log(token);
         
-        if (res.status === 200) {
-          const resData = await res.json();
-          const result = await resData.result;
-  
-          userId = result.userId;
-        };
-      } catch (error) {
-        console.error("Failed to fetch user data:", error);
-        toast.error("Failed to load user data.");
-      }
-    };
-    fetchUserData();
-  }, []);
+  //       if (res.status === 200) {
+  //         const resData = await res.json();
+  //         console.log(resData);
+  //         const result = await resData.result;
+  //         console.log(result);
+
+  //         // userId = result.userId;
+  //       };
+  //     } catch (error) {
+  //       console.error("Failed to fetch user data:", error);
+  //       toast.error("Failed to load user data.");
+  //     }
+  //   };
+  //   fetchUserData();
+  // }, []);
     
   useEffect(() => {
     const fetchAppearance = async () => {
