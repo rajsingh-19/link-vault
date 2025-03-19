@@ -49,7 +49,7 @@ const LinkModal = ({ handleCloseModal, id, modalTab }) => {
 
   const fetchLinkDetails = async () => {
     try {
-      const result = await getLinkById(token, id);
+      const result = await getLinkById(id);
       if (result.status === 200) {
         const resData = await result.json();
         const linkDetails = resData.data;

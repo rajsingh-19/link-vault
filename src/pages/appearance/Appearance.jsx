@@ -63,7 +63,7 @@ const Appearance = () => {
   useEffect(() => {
     const fetchAppearance = async () => {
       try {
-        const res = await getAppearance(userId, token);
+        const res = await getAppearance(userId);
         if (res.status === 200) {
           const resData = await res.json();
           const getResData = resData.data;
@@ -199,7 +199,7 @@ const Appearance = () => {
   const handleSaveAppearance = async () => {
     try {
       // Fetch existing appearance first
-      const existingAppearanceRes = await getAppearance(userId, token);
+      const existingAppearanceRes = await getAppearance(userId);
   
       if (existingAppearanceRes.ok) {
         // If appearance exists, update it

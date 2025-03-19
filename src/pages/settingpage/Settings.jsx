@@ -20,7 +20,7 @@ const Settings = () => {
   // Fetch user info when component mounts
   const fetchUserInfo = async () => {
     try {
-      const response = await getUserInfo(userId, token);
+      const response = await getUserInfo(userId);
       if (response.status === 200) {
         const userData = await response.json();
         setUpdateFormData({
@@ -116,7 +116,7 @@ const Settings = () => {
           confirmPassword: "",
         }));
 
-        getUserInfo(userId, token);
+        getUserInfo(userId);
       } else {
         // Handles any errors by logging the response and showing an alert
         const errorData = await res.json();

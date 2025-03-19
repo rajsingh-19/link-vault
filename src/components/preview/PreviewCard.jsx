@@ -68,7 +68,7 @@ const PreviewCard = ({ bannerColor, liveProfile, modalStatus, hideShareButton, c
   //      fn for fetching all the social media links
   const fetchSocialLinks = async () => {
     try {
-      const res = await getAllSocialLinks(userId, token);
+      const res = await getAllSocialLinks(userId);
         
       if (res.status === 200) {
         const resData = await res.json();
@@ -86,7 +86,7 @@ const PreviewCard = ({ bannerColor, liveProfile, modalStatus, hideShareButton, c
   //      fn for fetching all the shop links 
   const fetchAllShopLinks = async () => {
     try {
-      const res = await getAllShopLinks(userId, token);
+      const res = await getAllShopLinks(userId);
       
       if (res.status === 200) {
         const resData = await res.json();
@@ -103,7 +103,7 @@ const PreviewCard = ({ bannerColor, liveProfile, modalStatus, hideShareButton, c
 
   const fetchUserData = async () => {
       try {
-      const res = await getUserInfo(userId, token);
+      const res = await getUserInfo(userId);
       
       if (res.status === 200) {
         const resData = await res.json();
@@ -161,7 +161,7 @@ const PreviewCard = ({ bannerColor, liveProfile, modalStatus, hideShareButton, c
 
   const fetchAppearance = async () => {
     try {
-      const res = await getAppearance(userId, token);
+      const res = await getAppearance(userId);
       if(res.status === 200) {
         const resData = await res.json();
         const fetchedAppearanceDetails = resData.data;

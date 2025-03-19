@@ -35,12 +35,11 @@ export const nameCategory = (userId, token, userName, category) => {
 };
 
 //              get the user information
-export const getUserInfo = (userId, token) => {
+export const getUserInfo = (userId) => {
   return fetch(`${apiURL}api/user/info/${userId}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `${token}`,
+      'Content-Type': 'application/json'
     },
   });
 };
@@ -81,34 +80,31 @@ export const updateUserInfo = (userId, token, updateUserInformation) => {
 };
 
 // get the clicks count for social
-export const getClicksCountForSocial = (userId, token) => {
+export const getClicksCountForSocial = (userId) => {
   return fetch(`${apiURL}api/link/getNoOfClicksForSocial/${userId}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `${token}`,
+      'Content-Type': 'application/json'
     },
   });
 };
 
 // get the clicks count for shop
-export const getClicksCountForShop = (userId, token) => {
+export const getClicksCountForShop = (userId) => {
   return fetch(`${apiURL}api/link/getNoOfClicksForShop/${userId}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `${token}`,
+      'Content-Type': 'application/json'
     },
   });
 };
 
 // get the cta count
-export const getCtaCount = (userId, token) => {
+export const getCtaCount = (userId) => {
   return fetch(`${apiURL}api/user/cta/${userId}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `${token}`,
+      'Content-Type': 'application/json'
     },
   });
 };
@@ -118,7 +114,7 @@ export const createClick = (linkId) => {
   return fetch(`${apiURL}api/link/${linkId}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
   });
 };
@@ -128,7 +124,7 @@ export const getMonthlyClicks = (userId) => {
   return fetch(`${apiURL}api/link/getMonthlyClicks/${userId}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
   });
 };
@@ -176,23 +172,21 @@ export const createLink = (userId, token, linkDataToSend) => {
 };
 
 //        api for get all the social links
-export const getAllSocialLinks = (userId, token) => {
+export const getAllSocialLinks = (userId) => {
   return fetch(`${apiURL}api/link/getAllLinksForSocial/${userId}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `${token}`,
+      'Content-Type': 'application/json'
     }
   })
 }; 
 
 //        api for get all the social links
-export const getAllShopLinks = (userId, token) => {
+export const getAllShopLinks = (userId) => {
   return fetch(`${apiURL}api/link/getAllLinksForShop/${userId}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `${token}`,
+      'Content-Type': 'application/json'
     }
   })
 }; 
@@ -209,12 +203,11 @@ export const deleteLink = (token, id) => {
 };
 
 //        api for getting the link details
-export const getLinkById = (token, id) => {
+export const getLinkById = (id) => {
   return fetch(`${apiURL}api/link/getLink/${id}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `${token}`
+      'Content-Type': 'application/json'
     }
   });
 };
@@ -256,12 +249,11 @@ export const updateAppearance = (userId, token, customization) => {
 };
 
 //      api for fetching the appearance details
-export const getAppearance = (userId, token) => {
+export const getAppearance = (userId) => {
   return fetch(`${apiURL}api/appearance/get/${userId}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `${token}`
+      'Content-Type': 'application/json'
     }
   })
 };

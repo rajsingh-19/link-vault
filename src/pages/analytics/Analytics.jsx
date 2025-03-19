@@ -60,7 +60,7 @@ const Analytics = () => {
 
   const getCtaCounts = async () => {
     try {
-      const response = await getCtaCount(userId, token);
+      const response = await getCtaCount(userId);
       if (response.status == 200) {
         const data = await response.json();
         setCtaCounts(data.data.ctaCounts);
@@ -77,7 +77,7 @@ const Analytics = () => {
 
   const getClicksCountsForSocial = async () => {
     try {
-      const response = await getClicksCountForSocial(userId, token);
+      const response = await getClicksCountForSocial(userId);
       if (response.status == 200) {
         const data = await response.json();
         setSocialCounts(data.totalClicks);
@@ -94,7 +94,7 @@ const Analytics = () => {
 
   const getClicksCountsForShop = async () => {
     try {
-      const response = await getClicksCountForShop(userId, token);
+      const response = await getClicksCountForShop(userId);
       if (response.status == 200) {
         const data = await response.json();
         setShopCounts(data.totalClicks);
